@@ -759,54 +759,65 @@
       color: var(--espresso);
     }
 
+    .products-arrows {
+      display: flex;
+      gap: 0.75rem;
+    }
+
     .products-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
       gap: 0.5rem;
       padding: 0 4rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      cursor: grab;
     }
+    .products-grid::-webkit-scrollbar { display: none; }
+    .products-grid:active { cursor: grabbing; }
 
     .product-card {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 3 / 4;
+      background: #FAF6F1;
       cursor: pointer;
-    }
-    .product-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(44,24,16,0.7) 0%, transparent 50%);
-      transition: background 300ms ease-out;
-    }
-    .product-card:hover::after {
-      background: linear-gradient(to top, rgba(44,24,16,0.8) 0%, transparent 60%);
+      position: relative;
+      flex: 0 0 calc(50% - 0.25rem);
+      display: flex;
+      flex-direction: column;
     }
 
-    .product-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 600ms ease-out;
+    .product-img {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 3rem;
+      min-height: 420px;
     }
-    .product-card:hover img { transform: scale(1.05); }
+
+    .product-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      max-height: 500px;
+      margin: 0 auto;
+      transition: transform 0.6s var(--smooth);
+    }
+
+    .product-card:hover .product-img img { transform: translateY(-8px); }
 
     .product-body {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1.5rem;
-      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1.2rem 1.5rem 1.5rem;
     }
 
     .product-name {
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 700;
-      color: var(--cream);
+      color: var(--espresso);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 0.2rem;
@@ -818,17 +829,38 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--crema);
+      color: var(--mocha);
+    }
+
+    .product-meta {
+      text-align: right;
+    }
+
+    .product-weight {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mocha);
+      margin-bottom: 0.2rem;
     }
 
     .product-price {
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 700;
-      color: var(--cream);
+      color: var(--espresso);
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-top: 0.3rem;
+    }
+
+    .product-size {
+      font-size: 0.72rem;
+      color: var(--mocha);
+      background: var(--latte);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
     }
 
     /* ===== PRODUCT DETAIL MODAL ===== */
@@ -2384,6 +2416,9 @@
       .products-section { padding: 3rem 0; }
       .products-grid { padding: 0 1.25rem; }
       .products-header { padding: 0 1.25rem; }
+      .product-card { flex: 0 0 80%; }
+      .product-img { min-height: 300px; padding: 2rem 1.5rem; }
+      .product-img img { max-height: 280px; }
 
       /* About / Story */
       .story-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -2523,9 +2558,9 @@
       .journey-text-card-inner { padding: 1.5rem 1rem; }
 
       /* Best sellers */
-      .products-grid { grid-template-columns: 1fr; }
-      .product-card { aspect-ratio: 4 / 5; }
-      .products-header { padding: 0 1rem; }
+      .product-card { flex: 0 0 85%; }
+      .product-img { padding: 1.5rem 1rem; min-height: 250px; }
+      .products-header { padding: 0 1rem; gap: 0.5rem; }
 
       /* About */
       .story-stats { gap: 1rem; flex-wrap: wrap; }
@@ -2739,42 +2774,78 @@
     <section class="products-section" id="products">
       <div class="products-header reveal">
         <div class="products-tag">Best Sellers</div>
+        <div class="products-arrows">
+          <button class="reviews-arrow" id="productPrev">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="reviews-arrow" id="productNext">
+            <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
       </div>
 
       <div class="products-grid">
         <div class="product-card reveal" data-product="morning-hum">
-          <img src="images/showreel-1.webp" alt="Morning Hum">
+          <div class="product-img">
+            <img src="images/showreel-1.png" alt="Morning Hum">
+          </div>
           <div class="product-body">
-            <div class="product-name">Morning Hum</div>
-            <div class="product-subtitle">Light Roast · 250g</div>
-            <div class="product-price">$22</div>
+            <div>
+              <div class="product-name">Morning Hum</div>
+              <div class="product-subtitle">Light Roast</div>
+            </div>
+            <div class="product-meta">
+              <div class="product-weight">12 oz</div>
+              <div class="product-price">$22</div>
+            </div>
           </div>
         </div>
 
         <div class="product-card reveal" data-product="the-regular">
-          <img src="images/showreel-3.webp" alt="The Regular">
+          <div class="product-img">
+            <img src="images/showreel-3.png" alt="The Regular">
+          </div>
           <div class="product-body">
-            <div class="product-name">The Regular</div>
-            <div class="product-subtitle">Medium Roast · 250g</div>
-            <div class="product-price">$19</div>
+            <div>
+              <div class="product-name">The Regular</div>
+              <div class="product-subtitle">Medium Roast</div>
+            </div>
+            <div class="product-meta">
+              <div class="product-weight">12 oz</div>
+              <div class="product-price">$19</div>
+            </div>
           </div>
         </div>
 
         <div class="product-card reveal" data-product="nightcap">
-          <img src="images/nightcap.webp" alt="Nightcap">
+          <div class="product-img">
+            <img src="images/nightcap.png" alt="Nightcap">
+          </div>
           <div class="product-body">
-            <div class="product-name">Nightcap</div>
-            <div class="product-subtitle">Dark Roast · 250g</div>
-            <div class="product-price">$24</div>
+            <div>
+              <div class="product-name">Nightcap</div>
+              <div class="product-subtitle">Dark Roast</div>
+            </div>
+            <div class="product-meta">
+              <div class="product-weight">12 oz</div>
+              <div class="product-price">$24</div>
+            </div>
           </div>
         </div>
 
         <div class="product-card reveal" data-product="wind-down">
-          <img src="images/showreel-7.webp" alt="Wind-Down">
+          <div class="product-img">
+            <img src="images/showreel-7.png" alt="Wind-Down">
+          </div>
           <div class="product-body">
-            <div class="product-name">Wind-Down</div>
-            <div class="product-subtitle">Decaf · 250g</div>
-            <div class="product-price">$21</div>
+            <div>
+              <div class="product-name">Wind-Down</div>
+              <div class="product-subtitle">Decaf</div>
+            </div>
+            <div class="product-meta">
+              <div class="product-weight">12 oz</div>
+              <div class="product-price">$21</div>
+            </div>
           </div>
         </div>
       </div>
@@ -3586,6 +3657,31 @@
       closePDP();
       setTimeout(() => openCheckout(currentPdpId, pdpQty), 400);
     });
+
+    // PRODUCTS — arrow scroll
+    (function() {
+      const grid = document.querySelector('.products-grid');
+      if (!grid) return;
+      const prev = document.getElementById('productPrev');
+      const next = document.getElementById('productNext');
+      const amt = 600;
+      function smoothScrollGrid(delta) {
+        const start = grid.scrollLeft;
+        const target = start + delta;
+        const duration = 400;
+        let t0 = null;
+        function step(ts) {
+          if (!t0) t0 = ts;
+          const p = Math.min((ts - t0) / duration, 1);
+          const ease = 1 - Math.pow(1 - p, 3);
+          grid.scrollLeft = start + (target - start) * ease;
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      prev.addEventListener('click', () => smoothScrollGrid(-amt));
+      next.addEventListener('click', () => smoothScrollGrid(amt));
+    })();
 
     // Product cards open PDP
     document.querySelectorAll('.product-card').forEach(card => {
