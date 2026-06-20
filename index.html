@@ -1451,7 +1451,7 @@
       position: relative;
       overflow: hidden;
       display: flex;
-      min-height: 35vh;
+      min-height: calc(35vh - 20px);
     }
 
     .sub-image {
@@ -2404,7 +2404,7 @@
 
       /* Subscription */
       .sub-section { flex-direction: column; min-height: auto; }
-      .sub-image { min-height: 234px; }
+      .sub-image { min-height: 250px; }
       .sub-content { padding: 3rem 1.25rem; }
       .sub-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
       .sub-copy { font-size: 13px; }
