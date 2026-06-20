@@ -2128,17 +2128,22 @@
     }
 
     @media (max-width: 768px) {
+      /* Scroll nav */
       .scroll-nav { padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; }
       .scroll-nav-left { display: none; }
       .scroll-nav-right { gap: 0.75rem; }
       .scroll-nav-right .scroll-nav-link { display: none; }
 
+      /* Hero */
       .hero-main { padding: 2rem 1.5rem; }
       .hero-nav-left { display: none; }
       .hero-info-right { display: none; }
+      .hero-desc { display: none; }
       .hero-logo-svg { width: clamp(200px, 55vw, 300px); }
       .hero-photo { width: clamp(160px, 40vw, 220px); }
+      .hero-photos { gap: 0.75rem; padding: 1.5rem 0 3rem; }
 
+      /* Journey */
       .journey-section { min-height: auto; padding: 3rem 1.25rem; }
       .journey-collage {
         min-height: auto;
@@ -2165,40 +2170,75 @@
       .journey-watermark { display: none; }
       .journey-hero-img img { border-radius: 0; }
 
+      /* General sections */
       .section { padding: 3.5rem 1.25rem; }
+
+      /* Best sellers */
       .products-section { padding: 3rem 0; }
       .products-grid { padding: 0 1.25rem; }
       .products-header { padding: 0 1.25rem; }
-      .product-card { flex: 0 0 75%; }
-      .product-img { min-height: 300px; }
+      .product-card { flex: 0 0 80%; }
+      .product-img { min-height: 300px; padding: 2rem 1.5rem; }
+      .product-img img { max-height: 280px; }
+
+      /* About / Story */
       .story-grid { grid-template-columns: 1fr; gap: 2rem; }
       .story-visual { max-height: 320px; }
+
+      /* How it's made */
+      .howmade-section { padding: 0 1.25rem; }
       .howmade-copy { display: none; }
-      .reviews-section { padding: 3rem 0 4rem; }
+      .howmade-watermark { display: none; }
+
+      /* Marquee */
+      .marquee-track span { font-size: 0.65rem; padding: 0 1rem; }
+      .marquee-track span::after { margin-left: 1rem; }
+
+      /* Testimonials */
+      .reviews-section { padding: 4rem 0 5rem; }
       .reviews-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 0 1.25rem; }
       .reviews-subtitle { text-align: left; }
-      .reviews-track { padding: 0 1.25rem; gap: 1.25rem; }
+      .reviews-track { margin-left: 1.25rem; padding: 0 1.25rem 0 0; gap: 1.25rem; }
       .review-pair { flex-direction: column; }
-      .review-card { flex: 0 0 auto; min-height: 280px; }
-      .review-card-photo { flex: 0 0 auto; min-height: 240px; }
+      .review-card { flex: 0 0 auto; min-height: 240px; padding: 1.5rem; }
+      .review-card-photo { flex: 0 0 auto; min-height: 220px; }
+
+      /* Subscription */
+      .sub-section { flex-direction: column; min-height: auto; }
+      .sub-image { min-height: 250px; }
+      .sub-content { padding: 3rem 1.25rem; }
+      .sub-title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .sub-copy { font-size: 13px; }
+
+      /* Footer */
       .footer-nav-left { display: none; }
       .footer-info-right { display: none; }
       .footer-desc { display: none; }
-      .footer-main { min-height: 30vh; padding: 3rem 1.25rem; }
+      .footer-main { min-height: auto; padding: 3rem 1.25rem; }
       .footer-logo { width: clamp(180px, 50vw, 280px); }
+      .footer-photos { grid-template-columns: repeat(3, 1fr); }
       .footer-bottom { padding: 1.5rem 1.25rem; }
-      .sub-section { flex-direction: column; min-height: auto; }
-      .sub-image { min-height: 300px; }
-      .sub-content { padding: 3rem 1.25rem; }
-      .newsletter-form { flex-direction: column; }
+
+      /* PDP */
       .pdp-main { grid-template-columns: 1fr; }
-      .pdp-gallery { position: relative; height: 50vh; }
+      .pdp-gallery { min-height: 50vh; }
+      .pdp-thumbs { left: 0.75rem; }
+      .pdp-thumb { width: 44px; height: 44px; }
       .pdp-details { padding: 2rem 1.25rem; }
       .pdp-info-grid { grid-template-columns: 1fr; }
+      .pdp-actions { flex-direction: column; }
+      .pdp-close { top: 1rem; right: 1rem; }
+
+      /* Cart */
+      .newsletter-form { flex-direction: column; }
     }
 
     @media (max-width: 480px) {
       .story-stats { gap: 1rem; flex-wrap: wrap; }
+      .product-card { flex: 0 0 85%; }
+      .footer-photos { grid-template-columns: repeat(2, 1fr); }
+      .hero-photo { width: clamp(140px, 38vw, 200px); }
+      .reviews-arrows { display: none; }
     }
   </style>
 </head>
