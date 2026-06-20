@@ -2142,7 +2142,7 @@
       /* Hero */
       .hero { min-height: auto; }
       .hero-main {
-        padding: 5rem 1.5rem 2rem;
+        padding: 8rem 1.5rem 2rem;
         flex-direction: column;
       }
       .hero-nav-left { display: none; }
@@ -2213,7 +2213,8 @@
         position: relative !important;
         top: auto !important;
         height: auto !important;
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
       }
       .howmade-frame {
         position: relative !important;
@@ -2222,6 +2223,7 @@
         transform: none !important;
         width: 100% !important;
         height: 40vh;
+        order: 1;
       }
       .howmade-queue { display: none !important; }
       .howmade-copy {
@@ -2234,12 +2236,14 @@
         text-align: center !important;
         transform: none !important;
         opacity: 1 !important;
-        padding: 2.5rem 0 0;
+        order: 2;
+        margin-top: 2rem;
       }
       .howmade-copy.active { opacity: 1 !important; }
       .howmade-copy-text { font-size: 13px !important; }
       .howmade-watermark { display: none !important; }
       .howmade-mobile-nav {
+        order: 3;
         display: flex !important;
         justify-content: center;
         gap: 1rem;
