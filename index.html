@@ -2241,7 +2241,15 @@
       /* Footer */
       .footer-nav-left { display: none; }
       .footer-info-right { display: none; }
-      .footer-desc { display: none; }
+      .footer-desc {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        text-align: center;
+        max-width: 100%;
+        font-size: 13px;
+        padding: 0 1rem;
+      }
       .footer-main { min-height: auto; padding: 3rem 1.25rem; }
       .footer-logo { width: clamp(180px, 50vw, 280px); }
       .footer-photos { grid-template-columns: repeat(2, 1fr); }
