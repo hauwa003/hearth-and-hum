@@ -2128,8 +2128,13 @@
     }
 
     @media (max-width: 768px) {
-      /* Scroll nav */
-      .scroll-nav { padding: 0.75rem 1.25rem; display: flex; justify-content: space-between; }
+      /* Scroll nav — always visible on mobile */
+      .scroll-nav {
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(0) !important;
+      }
       .scroll-nav-left { display: none; }
       .scroll-nav-right { gap: 0.75rem; }
       .scroll-nav-right .scroll-nav-link { display: none; }
