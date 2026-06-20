@@ -454,6 +454,27 @@
       left: 3.5rem;
     }
 
+    .hero-cta {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 3.5rem;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--dark-roast);
+      background: var(--cream);
+      padding: 0.85rem 2rem;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: heroFade 0.8s var(--smooth) 1.2s forwards;
+      transition: background 200ms ease-out;
+    }
+
+    .hero-cta:hover { background: var(--crema); }
+
     /* Photo strip — infinite scrolling showreel */
     .hero-photos-wrapper {
       position: relative;
@@ -830,6 +851,16 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--mocha);
+    }
+
+    .product-notes {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: var(--mocha);
+      letter-spacing: 0.04em;
+      margin-top: 0.3rem;
+      opacity: 0.7;
     }
 
     .product-meta {
@@ -1603,6 +1634,26 @@
       letter-spacing: 0.1em;
     }
 
+    .reviews-proof {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      padding: 0 4rem;
+    }
+
+    .proof-stat {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mocha);
+    }
+
+    .proof-stat span {
+      color: var(--espresso);
+    }
+
     .review-pair {
       display: flex;
       flex-shrink: 0;
@@ -2340,6 +2391,25 @@
       color: var(--espresso);
     }
 
+    .order-toast {
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(-120%);
+      background: var(--espresso);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem 2rem;
+      z-index: 4000;
+      transition: transform 0.4s var(--smooth);
+    }
+
+    .order-toast.show { transform: translateX(-50%) translateY(0); }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
       .product-card { flex: 0 0 calc(50% - 0.25rem); }
@@ -2372,6 +2442,12 @@
         max-width: 100%;
         font-size: 13px;
         padding: 0.5rem 1.5rem 0;
+      }
+      .hero-cta {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        margin-top: 1rem;
       }
       .hero-logo-svg { width: clamp(150px, 40vw, 220px); }
       .hero-photo { width: clamp(250px, 65vw, 340px); }
@@ -2571,6 +2647,7 @@
       /* Testimonials */
       .reviews-arrows { display: none; }
       .reviews-header { padding: 0 1rem; }
+      .reviews-proof { padding: 0 1rem; gap: 1rem; flex-wrap: wrap; }
       .reviews-track { margin-left: 1rem; padding: 0 1rem 0 0; }
 
       /* Subscription */
@@ -2689,6 +2766,9 @@
         <!-- Description -->
         <p class="hero-desc">We roast small batch specialty coffee for the moments that matter — slow mornings, long conversations, and everything in between.</p>
 
+        <!-- CTA -->
+        <a href="#products" class="hero-cta">Shop Best Sellers</a>
+
         <!-- Right info -->
         <div class="hero-info-right">
           <span>Small Batch Roasted</span>
@@ -2762,7 +2842,7 @@
         <div class="journey-collage-item journey-text-card" data-parallax="0.08">
           <div class="journey-text-card-inner">
             <div class="journey-tag">Our Story</div>
-            <p class="journey-text">Hearth & Hum began with a simple belief — that coffee should feel like coming home. Small batch roasted, sourced from farms we trust, and made for the moments that matter most.</p>
+            <p class="journey-text">Hearth & Hum started in a garage roaster in Southeast Portland, 2024. We source single-origin beans from family farms in Colombia, Ethiopia, and Guatemala — roasted weekly in small 15kg batches so every bag arrives at peak flavour.</p>
           </div>
         </div>
 
@@ -2792,6 +2872,7 @@
             <div>
               <div class="product-name">Morning Hum</div>
               <div class="product-subtitle">Light Roast</div>
+              <div class="product-notes">Peach · Jasmine · Honey</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">12 oz</div>
@@ -2808,6 +2889,7 @@
             <div>
               <div class="product-name">The Regular</div>
               <div class="product-subtitle">Medium Roast</div>
+              <div class="product-notes">Caramel · Walnut · Brown Sugar</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">12 oz</div>
@@ -2824,6 +2906,7 @@
             <div>
               <div class="product-name">Nightcap</div>
               <div class="product-subtitle">Dark Roast</div>
+              <div class="product-notes">Dark Chocolate · Fig · Smoky Oak</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">12 oz</div>
@@ -2840,6 +2923,7 @@
             <div>
               <div class="product-name">Wind-Down</div>
               <div class="product-subtitle">Decaf</div>
+              <div class="product-notes">Vanilla · Toasted Almond · Chamomile</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">12 oz</div>
@@ -2917,6 +3001,12 @@
             <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
           </button>
         </div>
+      </div>
+
+      <div class="reviews-proof reveal">
+        <div class="proof-stat"><span>4.9/5</span> Avg. Rating</div>
+        <div class="proof-stat"><span>1,200+</span> Bags Shipped</div>
+        <div class="proof-stat"><span>48hr</span> Roast-to-Door</div>
       </div>
 
       <div class="reviews-track">
@@ -3120,6 +3210,8 @@
     </div>
     <button class="btn-checkout-now" id="checkoutConfirm">Complete Purchase</button>
   </div>
+
+  <div class="order-toast" id="orderToast">Order confirmed — thank you!</div>
 
   <!-- PRODUCT DETAIL MODAL -->
   <div class="pdp-overlay" id="pdpOverlay"></div>
@@ -3646,9 +3738,15 @@
 
     document.getElementById('checkoutClose').addEventListener('click', closeCheckout);
     checkoutOverlay.addEventListener('click', closeCheckout);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCheckout(); });
     document.getElementById('checkoutConfirm').addEventListener('click', () => {
       closeCheckout();
-      alert('Thank you for your order! This is a demo site.');
+      Object.keys(cart).forEach(k => delete cart[k]);
+      updateBadge();
+      renderCart();
+      const toast = document.getElementById('orderToast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
     });
 
     document.querySelector('.pdp-buy-btn').addEventListener('click', () => {
@@ -3758,6 +3856,30 @@
       updateBadge();
       renderCart();
     }
+
+    document.querySelector('.btn-checkout').addEventListener('click', () => {
+      const items = Object.values(cart);
+      if (!items.length) return;
+      let total = 0;
+      const html = items.map(i => {
+        const sub = i.price * i.qty;
+        total += sub;
+        return `<div class="checkout-item">
+          <div>
+            <div class="checkout-item-name">${i.name}</div>
+            <div class="checkout-item-detail">Qty: ${i.qty} · 250g bag</div>
+          </div>
+          <div class="checkout-item-price">$${sub.toFixed(2)}</div>
+        </div>`;
+      }).join('');
+      document.getElementById('checkoutItems').innerHTML = html;
+      document.getElementById('checkoutTotal').textContent = '$' + total.toFixed(2);
+      closeCart();
+      setTimeout(() => {
+        checkoutModal.classList.add('open');
+        checkoutOverlay.classList.add('open');
+      }, 300);
+    });
 
     document.querySelectorAll('.btn-add-bag').forEach(btn => {
       btn.addEventListener('click', e => {
