@@ -2135,13 +2135,15 @@
       .scroll-nav-right .scroll-nav-link { display: none; }
 
       /* Hero */
+      .hero { min-height: auto; }
       .hero-main { padding: 2rem 1.5rem; }
       .hero-nav-left { display: none; }
       .hero-info-right { display: none; }
       .hero-desc { display: none; }
       .hero-logo-svg { width: clamp(200px, 55vw, 300px); }
-      .hero-photo { width: clamp(160px, 40vw, 220px); }
-      .hero-photos { gap: 0.75rem; padding: 1.5rem 0 3rem; }
+      .hero-photo { width: clamp(130px, 35vw, 180px); }
+      .hero-photos { gap: 0.5rem; padding: 1rem 0 2rem; }
+      .hero-photos-wrapper { padding-bottom: 1.5rem; }
 
       /* Journey */
       .journey-section { min-height: auto; padding: 3rem 1.25rem; }
@@ -2185,8 +2187,26 @@
       .story-grid { grid-template-columns: 1fr; gap: 2rem; }
       .story-visual { max-height: 320px; }
 
-      /* How it's made */
-      .howmade-section { padding: 0 1.25rem; }
+      /* How it's made — complete mobile overhaul */
+      .howmade-section {
+        padding: 2rem 1.25rem;
+        height: auto !important;
+        overflow: visible;
+      }
+      .howmade-inner {
+        position: relative !important;
+        height: auto !important;
+        gap: 1.5rem;
+      }
+      .howmade-frame {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        height: 60vh;
+      }
+      .howmade-queue { display: none !important; }
       .howmade-copy { display: none; }
       .howmade-watermark { display: none; }
 
@@ -2199,9 +2219,9 @@
       .reviews-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 0 1.25rem; }
       .reviews-subtitle { text-align: left; }
       .reviews-track { margin-left: 1.25rem; padding: 0 1.25rem 0 0; gap: 1.25rem; }
-      .review-pair { flex-direction: column; }
-      .review-card { flex: 0 0 auto; min-height: 240px; padding: 1.5rem; }
-      .review-card-photo { flex: 0 0 auto; min-height: 220px; }
+      .review-pair { flex-direction: column; gap: 1.25rem; }
+      .review-card { flex: 0 0 auto; width: 300px; min-height: 240px; padding: 1.5rem; }
+      .review-card-photo { flex: 0 0 auto; width: 300px; height: 300px; min-height: auto; }
 
       /* Subscription */
       .sub-section { flex-direction: column; min-height: auto; }
@@ -2216,7 +2236,8 @@
       .footer-desc { display: none; }
       .footer-main { min-height: auto; padding: 3rem 1.25rem; }
       .footer-logo { width: clamp(180px, 50vw, 280px); }
-      .footer-photos { grid-template-columns: repeat(3, 1fr); }
+      .footer-photos { grid-template-columns: repeat(2, 1fr); }
+      .footer-photo:last-child { display: none; }
       .footer-bottom { padding: 1.5rem 1.25rem; }
 
       /* PDP */
@@ -2256,7 +2277,8 @@
       .story-stats { gap: 1rem; flex-wrap: wrap; }
 
       /* How it's made */
-      .howmade-section { padding: 0 0.75rem; }
+      .howmade-section { padding: 1.5rem 0.75rem; }
+      .howmade-frame { height: 50vh; }
 
       /* Testimonials */
       .reviews-arrows { display: none; }
@@ -2874,8 +2896,6 @@
       const copyTextEl = document.getElementById('howmadeCopyText');
       const total = thumbs.length;
       let current = 0;
-      let smoothProgress = 0;
-      let targetProgress = 0;
 
       const slideCopy = [
         "Hand-selecting the finest green beans. Only the top 2% make the cut from each harvest.",
@@ -2890,88 +2910,100 @@
         "From farm to cup in under two weeks. Because freshness is everything."
       ];
 
-      // Show first image + copy on load
+      // Show first image on load
       frameImgs[0].classList.add('active');
-      copyTextEl.textContent = slideCopy[0];
-      copyEl.classList.add('pos-top-left', 'active');
 
-      function animate() {
-        smoothProgress += (targetProgress - smoothProgress) * 0.08;
+      const hmIsMobile = window.matchMedia('(max-width: 768px)').matches;
 
-        const thumbWidth = thumbs[0].offsetWidth + 4;
-        const totalShift = thumbWidth * total;
-        queue.style.transform = `translateY(-50%) translateX(${-smoothProgress * totalShift}px)`;
+      if (hmIsMobile) {
+        // MOBILE: simple auto-play slideshow
+        setInterval(() => {
+          current = (current + 1) % total;
+          frameImgs.forEach((img, i) => img.classList.toggle('active', i === current));
+          progressBar.style.width = ((current + 1) / total * 100) + '%';
+        }, 3000);
+      } else {
+        // DESKTOP: full scroll-driven experience
+        let smoothProgress = 0;
+        let targetProgress = 0;
 
-        // Progress bar
-        const progressPct = Math.min(100, (smoothProgress * total / (total - 1)) * 100);
-        progressBar.style.width = progressPct + '%';
+        copyTextEl.textContent = slideCopy[0];
+        copyEl.classList.add('pos-top-left', 'active');
 
-        // Per-thumb effects
-        const frameRect = frameEl.getBoundingClientRect();
-        const frameCX = frameRect.left + frameRect.width / 2;
+        function animate() {
+          smoothProgress += (targetProgress - smoothProgress) * 0.08;
 
-        thumbs.forEach((thumb, i) => {
-          const thumbRect = thumb.getBoundingClientRect();
-          const thumbCX = thumbRect.left + thumbRect.width / 2;
-          const dist = Math.abs(thumbCX - frameCX);
-          const maxDist = window.innerWidth;
-          const proximity = 1 - Math.min(dist / maxDist, 1);
+          const thumbWidth = thumbs[0].offsetWidth + 4;
+          const totalShift = thumbWidth * total;
+          queue.style.transform = `translateY(-50%) translateX(${-smoothProgress * totalShift}px)`;
 
-          // Staggered wave: slight vertical offset based on index
-          const waveOffset = Math.sin(i * 0.8 + smoothProgress * 6) * 8;
+          // Progress bar
+          const progressPct = Math.min(100, (smoothProgress * total / (total - 1)) * 100);
+          progressBar.style.width = progressPct + '%';
 
-          if (i <= current) {
-            thumb.style.transform = `scale(0.7) translateY(${waveOffset}px)`;
-            thumb.style.opacity = '0.15';
-            thumb.style.filter = `blur(1.5px)`;
-          } else {
-            // Scale: far = 0.75, close = 1.1
-            const scale = 0.75 + proximity * 0.35;
-            // Opacity: far = 0.35, close = 1
-            const opacity = 0.35 + proximity * 0.65;
-            // Blur: far = 2px, close = 0
-            const blur = (1 - proximity) * 2;
-            // 3D tilt: rotate Y based on distance from frame
-            const direction = thumbCX > frameCX ? -1 : 1;
-            const rotateY = direction * (1 - proximity) * 15;
+          // Per-thumb effects
+          const frameRect = frameEl.getBoundingClientRect();
+          const frameCX = frameRect.left + frameRect.width / 2;
 
-            thumb.style.transform = `perspective(800px) rotateY(${rotateY}deg) scale(${scale}) translateY(${waveOffset}px)`;
-            thumb.style.opacity = String(opacity);
-            thumb.style.filter = `blur(${blur}px)`;
+          thumbs.forEach((thumb, i) => {
+            const thumbRect = thumb.getBoundingClientRect();
+            const thumbCX = thumbRect.left + thumbRect.width / 2;
+            const dist = Math.abs(thumbCX - frameCX);
+            const maxDist = window.innerWidth;
+            const proximity = 1 - Math.min(dist / maxDist, 1);
+
+            // Staggered wave: slight vertical offset based on index
+            const waveOffset = Math.sin(i * 0.8 + smoothProgress * 6) * 8;
+
+            if (i <= current) {
+              thumb.style.transform = `scale(0.7) translateY(${waveOffset}px)`;
+              thumb.style.opacity = '0.15';
+              thumb.style.filter = `blur(1.5px)`;
+            } else {
+              const scale = 0.75 + proximity * 0.35;
+              const opacity = 0.35 + proximity * 0.65;
+              const blur = (1 - proximity) * 2;
+              const direction = thumbCX > frameCX ? -1 : 1;
+              const rotateY = direction * (1 - proximity) * 15;
+
+              thumb.style.transform = `perspective(800px) rotateY(${rotateY}deg) scale(${scale}) translateY(${waveOffset}px)`;
+              thumb.style.opacity = String(opacity);
+              thumb.style.filter = `blur(${blur}px)`;
+            }
+          });
+
+          // Determine which image fills the frame
+          const activeIndex = Math.min(total - 1, Math.floor(smoothProgress * total));
+          if (activeIndex !== current) {
+            frameImgs.forEach((img, i) => img.classList.toggle('active', i === activeIndex));
+
+            // Frame pulse on new image
+            frameEl.classList.add('pulse');
+            setTimeout(() => frameEl.classList.remove('pulse'), 350);
+
+            // Update floating copy text + alternate position
+            copyEl.classList.remove('active');
+            setTimeout(() => {
+              copyTextEl.textContent = slideCopy[activeIndex] || '';
+              copyEl.classList.remove('pos-top-left', 'pos-bottom-right');
+              copyEl.classList.add(activeIndex % 2 === 0 ? 'pos-top-left' : 'pos-bottom-right');
+              copyEl.classList.add('active');
+            }, 300);
+
+            current = activeIndex;
           }
-        });
 
-        // Determine which image fills the frame
-        const activeIndex = Math.min(total - 1, Math.floor(smoothProgress * total));
-        if (activeIndex !== current) {
-          frameImgs.forEach((img, i) => img.classList.toggle('active', i === activeIndex));
-
-          // Frame pulse on new image
-          frameEl.classList.add('pulse');
-          setTimeout(() => frameEl.classList.remove('pulse'), 350);
-
-          // Update floating copy text + alternate position
-          copyEl.classList.remove('active');
-          setTimeout(() => {
-            copyTextEl.textContent = slideCopy[activeIndex] || '';
-            copyEl.classList.remove('pos-top-left', 'pos-bottom-right');
-            copyEl.classList.add(activeIndex % 2 === 0 ? 'pos-top-left' : 'pos-bottom-right');
-            copyEl.classList.add('active');
-          }, 300);
-
-          current = activeIndex;
+          requestAnimationFrame(animate);
         }
-
         requestAnimationFrame(animate);
-      }
-      requestAnimationFrame(animate);
 
-      window.addEventListener('scroll', () => {
-        const rect = hmSection.getBoundingClientRect();
-        const scrolled = -rect.top;
-        const scrollable = hmSection.offsetHeight - window.innerHeight;
-        targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
-      }, { passive: true });
+        window.addEventListener('scroll', () => {
+          const rect = hmSection.getBoundingClientRect();
+          const scrolled = -rect.top;
+          const scrollable = hmSection.offsetHeight - window.innerHeight;
+          targetProgress = Math.max(0, Math.min(1, scrolled / scrollable));
+        }, { passive: true });
+      }
     }
 
     // JOURNEY COLLAGE — parallax + mouse-reactive depth + staggered entrance
