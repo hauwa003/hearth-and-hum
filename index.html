@@ -2240,6 +2240,29 @@
       .howmade-copy.active { opacity: 1 !important; }
       .howmade-copy-text { font-size: 13px !important; }
       .howmade-watermark { display: none !important; }
+      .howmade-mobile-nav {
+        display: flex !important;
+        justify-content: center;
+        gap: 1rem;
+        padding-top: 1.25rem;
+      }
+      .howmade-mobile-nav button {
+        width: 44px;
+        height: 44px;
+        background: var(--crema);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .howmade-mobile-nav button svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--dark-roast);
+        fill: none;
+        stroke-width: 2;
+      }
 
       /* Marquee */
       .marquee-track span { font-size: 0.65rem; padding: 0 1rem; }
@@ -2604,6 +2627,11 @@
           <div class="howmade-progress"></div>
         </div>
 
+        <div class="howmade-mobile-nav" style="display:none;">
+          <button id="howmadePrev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button id="howmadeNext"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+        </div>
+
         <div class="howmade-queue">
           <div class="howmade-thumb"><img src="images/howmade-1.png" alt=""></div>
           <div class="howmade-thumb"><img src="images/howmade-2.png" alt=""></div>
@@ -2956,15 +2984,24 @@
       const hmIsMobile = window.matchMedia('(max-width: 768px)').matches;
 
       if (hmIsMobile) {
-        // MOBILE: simple auto-play slideshow with copy
+        // MOBILE: manual prev/next slideshow
         copyTextEl.textContent = slideCopy[0];
         copyEl.classList.add('active');
-        setInterval(() => {
-          current = (current + 1) % total;
+        progressBar.style.width = (1 / total * 100) + '%';
+
+        function goToSlide(idx) {
+          current = idx;
           frameImgs.forEach((img, i) => img.classList.toggle('active', i === current));
           progressBar.style.width = ((current + 1) / total * 100) + '%';
           copyTextEl.textContent = slideCopy[current] || '';
-        }, 3000);
+        }
+
+        document.getElementById('howmadePrev').addEventListener('click', () => {
+          goToSlide(current <= 0 ? total - 1 : current - 1);
+        });
+        document.getElementById('howmadeNext').addEventListener('click', () => {
+          goToSlide(current >= total - 1 ? 0 : current + 1);
+        });
       } else {
         // DESKTOP: full scroll-driven experience
         let smoothProgress = 0;
