@@ -2197,14 +2197,15 @@
 
       /* How it's made — complete mobile overhaul */
       .howmade-section {
-        padding: 2rem 1.25rem;
+        padding: 2rem 1.25rem !important;
         height: auto !important;
-        overflow: visible;
+        overflow: visible !important;
       }
       .howmade-inner {
         position: relative !important;
+        top: auto !important;
         height: auto !important;
-        gap: 1.5rem;
+        display: block !important;
       }
       .howmade-frame {
         position: relative !important;
@@ -2212,11 +2213,11 @@
         left: auto !important;
         transform: none !important;
         width: 100% !important;
-        height: 60vh;
+        height: 55vh;
       }
       .howmade-queue { display: none !important; }
-      .howmade-copy { display: none; }
-      .howmade-watermark { display: none; }
+      .howmade-copy { display: none !important; }
+      .howmade-watermark { display: none !important; }
 
       /* Marquee */
       .marquee-track span { font-size: 0.65rem; padding: 0 1rem; }
