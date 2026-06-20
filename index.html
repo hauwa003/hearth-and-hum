@@ -2311,7 +2311,7 @@
 
       /* PDP */
       .pdp-main { grid-template-columns: 1fr; }
-      .pdp-gallery { min-height: 50vh; }
+      .pdp-gallery { min-height: 40vh; }
       .pdp-thumbs { left: 0.75rem; }
       .pdp-thumb { width: 44px; height: 44px; }
       .pdp-details { padding: 2rem 1.25rem; }
@@ -2364,7 +2364,7 @@
       .footer-bottom { padding: 1rem; }
 
       /* PDP */
-      .pdp-gallery { min-height: 40vh; }
+      .pdp-gallery { min-height: 35vh; }
       .pdp-thumbs { position: relative; left: auto; top: auto; transform: none; flex-direction: row; justify-content: center; padding: 0.75rem; gap: 0.5rem; }
       .pdp-thumb { width: 48px; height: 48px; }
       .pdp-details { padding: 1.5rem 1rem; }
@@ -3259,10 +3259,12 @@
     const pdpOverlay = document.getElementById('pdpOverlay');
     const pdpCloseBtn = document.getElementById('pdpClose');
     let pdpQty = 1;
+    let currentPdpId = null;
 
     function openPDP(id) {
       const p = pdpData[id];
       if (!p) return;
+      currentPdpId = id;
       document.getElementById('pdpName').textContent = p.name;
       document.getElementById('pdpPrice').textContent = p.price;
       document.getElementById('pdpOrigin').textContent = p.origin;
@@ -3319,6 +3321,39 @@
       });
     });
 
+
+    // PDP Add to Cart
+    document.getElementById('pdpAddCart').addEventListener('click', () => {
+      if (!currentPdpId) return;
+      const p = pdpData[currentPdpId];
+      const priceNum = parseFloat(p.price.replace(/[^0-9.]/g, ''));
+      if (cart[currentPdpId]) {
+        cart[currentPdpId].qty += pdpQty;
+      } else {
+        cart[currentPdpId] = { id: currentPdpId, name: p.name, price: priceNum, bg: '#FAF6F1', emoji: '', qty: pdpQty };
+      }
+      updateBadge();
+      renderCart();
+      const btn = document.getElementById('pdpAddCart');
+      const orig = btn.textContent;
+      btn.textContent = '\u2713 Added!';
+      setTimeout(() => { btn.textContent = orig; }, 1200);
+      closePDP();
+      setTimeout(openCart, 400);
+    });
+
+    // PDP Buy it Now — adds to cart and opens cart
+    document.querySelector('.pdp-buy-btn').addEventListener('click', () => {
+      if (!currentPdpId) return;
+      const p = pdpData[currentPdpId];
+      const priceNum = parseFloat(p.price.replace(/[^0-9.]/g, ''));
+      cart = {};
+      cart[currentPdpId] = { id: currentPdpId, name: p.name, price: priceNum, bg: '#FAF6F1', emoji: '', qty: pdpQty };
+      updateBadge();
+      renderCart();
+      closePDP();
+      setTimeout(openCart, 400);
+    });
 
     // PRODUCTS — arrow scroll
     (function() {
