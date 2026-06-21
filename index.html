@@ -2478,9 +2478,11 @@
       max-width: 100%;
       max-height: 92vh;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       background: var(--cream);
       z-index: 3001;
-      padding: 1rem 2rem 2.5rem;
+      padding: 1rem 2rem 3rem;
       opacity: 0;
       pointer-events: none;
       border-radius: 16px 16px 0 0;
@@ -2513,6 +2515,7 @@
       flex-shrink: 0;
       overflow: hidden;
       background: var(--latte);
+      border-radius: 8px;
     }
     .checkout-item-thumb img {
       width: 100%;
@@ -2575,7 +2578,10 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
       transition: background 200ms ease-out, transform 160ms ease-out;
     }
     .btn-checkout-now:hover { background: #C4A77D; color: var(--espresso); }
@@ -2586,15 +2592,19 @@
       right: 1.5rem;
       width: 32px;
       height: 32px;
-      background: none;
-      border: 1px solid var(--latte);
+      background: var(--cream);
+      border: 1px solid #D4C4B0;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--espresso);
+      z-index: 2;
+      transition: background 200ms ease-out, border-color 200ms ease-out;
     }
+    .checkout-close:hover { background: var(--latte); border-color: var(--espresso); }
 
     /* ===== SHARED CHECKOUT FORM STYLES ===== */
     .checkout-divider {
@@ -2630,8 +2640,9 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--mocha);
+      color: var(--espresso);
       margin-bottom: 0.75rem;
+      text-align: center;
     }
 
     /* Express checkout buttons */
@@ -2647,7 +2658,8 @@
       gap: 0.5rem;
       width: 100%;
       padding: 0.85rem 1rem;
-      border: 1px solid var(--latte);
+      border: 1px solid #D4C4B0;
+      border-radius: 8px;
       background: transparent;
       cursor: pointer;
       font-family: var(--font-body);
@@ -2677,7 +2689,7 @@
       justify-content: space-between;
       margin-bottom: 0.75rem;
     }
-    .payment-label-row .checkout-form-label { margin-bottom: 0; }
+    .payment-label-row .checkout-form-label { margin-bottom: 0; text-align: left; }
 
     /* Floating label input wrapper */
     .float-field {
@@ -2688,13 +2700,14 @@
     .float-field .sub-modal-input {
       width: 100%;
       padding: 1.1rem 1rem 0.55rem 2.25rem;
-      border: 1px solid var(--latte);
-      background: transparent;
+      border: 1px solid #D4C4B0;
+      background: #FFFCF8;
+      border-radius: 8px;
       font-family: var(--font-body);
       font-size: 14px;
       color: var(--espresso);
       outline: none;
-      transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+      transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out), background 200ms var(--ease-out);
       box-sizing: border-box;
       margin-bottom: 0;
     }
@@ -2702,6 +2715,7 @@
     .float-field .sub-modal-input:focus {
       border-color: var(--espresso);
       box-shadow: 0 0 0 1px var(--espresso);
+      background: #fff;
     }
     .float-field .checkout-input::placeholder,
     .float-field .sub-modal-input::placeholder { color: transparent; }
@@ -2874,9 +2888,11 @@
       max-width: 100%;
       max-height: 92vh;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       background: var(--cream);
       z-index: 3001;
-      padding: 1rem 2rem 2.5rem;
+      padding: 1rem 2rem 3rem;
       opacity: 0;
       pointer-events: none;
       border-radius: 16px 16px 0 0;
@@ -2893,15 +2909,19 @@
       right: 1.5rem;
       width: 32px;
       height: 32px;
-      background: none;
-      border: 1px solid var(--latte);
+      background: var(--cream);
+      border: 1px solid #D4C4B0;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--espresso);
+      z-index: 2;
+      transition: background 200ms ease-out, border-color 200ms ease-out;
     }
+    .sub-modal-close:hover { background: var(--latte); border-color: var(--espresso); }
 
     .sub-modal-title {
       font-family: var(--font-body);
@@ -2911,6 +2931,7 @@
       letter-spacing: 0.14em;
       color: var(--espresso);
       margin-bottom: 1.5rem;
+      text-align: center;
     }
 
     .sub-modal-step { display: none; }
@@ -2922,8 +2943,9 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--mocha);
+      color: var(--espresso);
       margin-bottom: 0.75rem;
+      text-align: center;
     }
 
     .sub-option-group {
@@ -2975,10 +2997,29 @@
     }
 
     .sub-summary {
-      background: var(--latte);
-      padding: 1.25rem;
-      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      background: #FFF5EB;
+      border: 1px solid var(--latte);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
     }
+    .sub-summary-thumb {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--latte);
+    }
+    .sub-summary-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .sub-summary-info { flex: 1; }
 
     .sub-summary-name {
       font-family: var(--font-body);
@@ -2993,22 +3034,22 @@
       font-family: var(--font-body);
       font-size: 12px;
       color: var(--mocha);
-      margin-top: 0.25rem;
+      margin-top: 0.2rem;
     }
 
     .sub-summary-price {
       font-family: var(--font-body);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--espresso);
-      margin-top: 0.5rem;
+      margin-top: 0.35rem;
     }
 
     .sub-summary-trust {
       font-family: var(--font-body);
       font-size: 11px;
       color: var(--mocha);
-      margin-top: 0.25rem;
+      margin-top: 0.15rem;
     }
 
     .sub-confirm-msg {
@@ -3020,16 +3061,17 @@
     .sub-modal-input {
       width: 100%;
       padding: 0.85rem 1rem;
-      border: 1px solid var(--latte);
-      background: transparent;
+      border: 1px solid #D4C4B0;
+      border-radius: 8px;
+      background: #FFFCF8;
       font-family: var(--font-body);
       font-size: 14px;
       color: var(--espresso);
       margin-bottom: 1rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background 0.2s;
     }
-    .sub-modal-input:focus { border-color: var(--espresso); }
+    .sub-modal-input:focus { border-color: var(--espresso); background: #fff; }
     .sub-modal-input::placeholder { color: var(--mocha); opacity: 0.6; }
 
     .sub-modal-btn {
@@ -3043,10 +3085,14 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 200ms ease-out;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      transition: background 200ms ease-out, transform 160ms ease-out;
     }
     .sub-modal-btn:hover { background: #C4A77D; color: var(--espresso); }
+    .sub-modal-btn:active { transform: scale(0.97); }
 
     .sub-modal-back {
       display: inline-block;
@@ -4070,10 +4116,13 @@
       <button class="sub-modal-back" id="subBack4">&larr; Back</button>
       <div class="sub-modal-label">Order Summary</div>
       <div class="sub-summary" id="subSummary">
-        <div class="sub-summary-name" id="subSumName"></div>
-        <div class="sub-summary-detail" id="subSumDetail"></div>
-        <div class="sub-summary-price">$22 / delivery</div>
-        <div class="sub-summary-trust">Free shipping · Cancel anytime</div>
+        <div class="sub-summary-thumb" id="subSumThumb"><img src="images/product-1.png" alt=""></div>
+        <div class="sub-summary-info">
+          <div class="sub-summary-name" id="subSumName"></div>
+          <div class="sub-summary-detail" id="subSumDetail"></div>
+          <div class="sub-summary-price">$22 / delivery</div>
+          <div class="sub-summary-trust">Free shipping · Cancel anytime</div>
+        </div>
       </div>
       <div class="float-field">
         <svg class="field-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 6 10-6"/></svg>
@@ -4960,6 +5009,9 @@
       const name = product ? product.name : subRoast;
       document.getElementById('subSumName').textContent = name + ' · ' + subGrind;
       document.getElementById('subSumDetail').textContent = 'Delivered ' + subFreq.toLowerCase();
+      if (product && product.images && product.images[0]) {
+        document.getElementById('subSumThumb').querySelector('img').src = product.images[0];
+      }
     }
 
     document.getElementById('subSubmit').addEventListener('click', () => {
