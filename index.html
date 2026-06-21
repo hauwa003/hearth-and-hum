@@ -2509,16 +2509,21 @@
       display: flex;
       gap: 1rem;
       align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--latte);
+      padding: 1rem;
+      background: #FFF5EB;
+      border: 1px solid var(--latte);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(61,44,30,0.06);
+      margin-bottom: 0.75rem;
     }
+    .checkout-item:last-child { margin-bottom: 0; }
     .checkout-item-thumb {
-      width: 52px;
-      height: 52px;
+      width: 64px;
+      height: 64px;
       flex-shrink: 0;
       overflow: hidden;
       background: var(--latte);
-      border-radius: 8px;
+      border-radius: 10px;
     }
     .checkout-item-thumb img {
       width: 100%;
@@ -2550,25 +2555,34 @@
       font-weight: 700;
       color: var(--espresso);
     }
-    .checkout-total {
+    .checkout-summary {
+      padding: 1rem 0 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .checkout-summary-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.25rem 0 1.5rem;
-    }
-    .checkout-total-label {
       font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--mocha);
+      padding: 0.3rem 0;
+    }
+    .checkout-shipping-value {
+      color: var(--sage);
+      font-weight: 600;
+    }
+    .checkout-summary-total {
+      border-top: 2px solid var(--espresso);
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
       font-size: 14px;
       font-weight: 700;
       color: var(--espresso);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
     }
-    .checkout-total-price {
+    .checkout-summary-total span:last-child {
       font-family: 'DM Sans', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--espresso);
+      font-size: 1.2rem;
     }
     .btn-checkout-now {
       width: 100%;
@@ -2610,11 +2624,6 @@
     .checkout-close:hover { background: var(--latte); border-color: var(--espresso); }
 
     /* ===== SHARED CHECKOUT FORM STYLES ===== */
-    .checkout-divider {
-      border: none;
-      border-top: 1px solid var(--latte);
-      margin: 1.25rem 0;
-    }
     .checkout-or-divider {
       display: flex;
       align-items: center;
@@ -2805,17 +2814,21 @@
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    .checkout-modal.open .checkout-item,
+    .checkout-modal.open .checkout-summary,
     .checkout-modal.open .checkout-form-section,
     .checkout-modal.open .express-checkout,
-    .checkout-modal.open .checkout-or-divider,
-    .checkout-modal.open .checkout-divider {
+    .checkout-modal.open .checkout-or-divider {
       animation: fieldFadeIn 300ms var(--ease-out) both;
     }
-    .checkout-modal.open .checkout-divider { animation-delay: 0ms; }
-    .checkout-modal.open .express-checkout { animation-delay: 50ms; }
-    .checkout-modal.open .checkout-or-divider { animation-delay: 100ms; }
-    .checkout-modal.open .checkout-form-section:nth-of-type(1) { animation-delay: 150ms; }
-    .checkout-modal.open .checkout-form-section:nth-of-type(2) { animation-delay: 200ms; }
+    .checkout-modal.open .checkout-item:nth-child(1) { animation-delay: 0ms; }
+    .checkout-modal.open .checkout-item:nth-child(2) { animation-delay: 60ms; }
+    .checkout-modal.open .checkout-item:nth-child(3) { animation-delay: 120ms; }
+    .checkout-modal.open .checkout-summary { animation-delay: 80ms; }
+    .checkout-modal.open .express-checkout { animation-delay: 140ms; }
+    .checkout-modal.open .checkout-or-divider { animation-delay: 190ms; }
+    .checkout-modal.open .checkout-form-section:nth-of-type(1) { animation-delay: 240ms; }
+    .checkout-modal.open .checkout-form-section:nth-of-type(2) { animation-delay: 290ms; }
 
     /* Drag handle for bottom sheets */
     .sheet-handle {
@@ -2904,6 +2917,10 @@
       transition: opacity 0.3s var(--smooth), transform 0.4s var(--smooth);
     }
     .sub-modal.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    .sub-modal-step.active .sub-summary {
+      animation: fieldFadeIn 300ms var(--ease-out) both;
+    }
 
     .sub-modal-img { display: none; }
 
@@ -3002,58 +3019,84 @@
 
     .sub-summary {
       display: flex;
-      gap: 1rem;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
       background: #FFF5EB;
       border: 1px solid var(--latte);
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      padding: 1.5rem 1.25rem;
       margin-bottom: 1.25rem;
+      box-shadow: 0 2px 8px rgba(61,44,30,0.06);
     }
     .sub-summary-thumb {
-      width: 64px;
-      height: 64px;
-      flex-shrink: 0;
-      border-radius: 8px;
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
       overflow: hidden;
       background: var(--latte);
+      margin-bottom: 0.75rem;
     }
     .sub-summary-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    .sub-summary-info { flex: 1; }
 
     .sub-summary-name {
       font-family: var(--font-body);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--espresso);
+      margin-bottom: 0.6rem;
     }
 
-    .sub-summary-detail {
+    .sub-summary-pills {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+    .sub-summary-pill {
       font-family: var(--font-body);
-      font-size: 12px;
-      color: var(--mocha);
-      margin-top: 0.2rem;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--espresso);
+      background: var(--latte);
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
     }
 
     .sub-summary-price {
       font-family: var(--font-body);
-      font-size: 15px;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--espresso);
-      margin-top: 0.35rem;
+      margin-bottom: 0.5rem;
     }
 
     .sub-summary-trust {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
       font-family: var(--font-body);
-      font-size: 11px;
+      font-size: 12px;
       color: var(--mocha);
-      margin-top: 0.15rem;
+    }
+    .sub-summary-trust span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .sub-summary-trust svg {
+      width: 14px;
+      height: 14px;
+      color: var(--mocha);
     }
 
     .sub-confirm-msg {
@@ -3959,11 +4002,17 @@
     <button class="checkout-close" id="checkoutClose">&#10005;</button>
     <div class="checkout-modal-title">Checkout</div>
     <div id="checkoutItems"></div>
-    <div class="checkout-total">
-      <span class="checkout-total-label">Total</span>
-      <span class="checkout-total-price" id="checkoutTotal">$0</span>
+    <div class="checkout-summary">
+      <div class="checkout-summary-row">
+        <span>Subtotal</span><span id="checkoutSubtotal">$0</span>
+      </div>
+      <div class="checkout-summary-row">
+        <span>Shipping</span><span class="checkout-shipping-value">Free</span>
+      </div>
+      <div class="checkout-summary-row checkout-summary-total">
+        <span>Total</span><span id="checkoutTotal">$0</span>
+      </div>
     </div>
-    <hr class="checkout-divider">
 
     <div class="express-checkout">
       <button class="express-btn express-btn--apple" type="button">
@@ -4121,11 +4170,12 @@
       <div class="sub-modal-label">Order Summary</div>
       <div class="sub-summary" id="subSummary">
         <div class="sub-summary-thumb" id="subSumThumb"><img src="images/product-1.png" alt=""></div>
-        <div class="sub-summary-info">
-          <div class="sub-summary-name" id="subSumName"></div>
-          <div class="sub-summary-detail" id="subSumDetail"></div>
-          <div class="sub-summary-price">$22 / delivery</div>
-          <div class="sub-summary-trust">Free shipping · Cancel anytime</div>
+        <div class="sub-summary-name" id="subSumName"></div>
+        <div class="sub-summary-pills" id="subSumPills"></div>
+        <div class="sub-summary-price">$22 / delivery</div>
+        <div class="sub-summary-trust">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Free shipping</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Cancel anytime</span>
         </div>
       </div>
       <div class="float-field">
@@ -4715,6 +4765,7 @@
           </div>
           <div class="checkout-item-price">$${total.toFixed(2)}</div>
         </div>`;
+      document.getElementById('checkoutSubtotal').textContent = '$' + total.toFixed(2);
       document.getElementById('checkoutTotal').textContent = '$' + total.toFixed(2);
       resetCheckoutForm();
 
@@ -4907,6 +4958,7 @@
         </div>`;
       }).join('');
       document.getElementById('checkoutItems').innerHTML = html;
+      document.getElementById('checkoutSubtotal').textContent = '$' + total.toFixed(2);
       document.getElementById('checkoutTotal').textContent = '$' + total.toFixed(2);
       resetCheckoutForm();
       closeCart();
@@ -5011,11 +5063,14 @@
     function buildSubSummary() {
       const product = pdpData[subRoast];
       const name = product ? product.name : subRoast;
-      document.getElementById('subSumName').textContent = name + ' · ' + subGrind;
-      document.getElementById('subSumDetail').textContent = 'Delivered ' + subFreq.toLowerCase();
+      document.getElementById('subSumName').textContent = name;
       if (product && product.images && product.images[0]) {
         document.getElementById('subSumThumb').querySelector('img').src = product.images[0];
       }
+      const pills = [subRoast, subGrind, subFreq].filter(Boolean);
+      document.getElementById('subSumPills').innerHTML = pills.map(p =>
+        `<span class="sub-summary-pill">${p}</span>`
+      ).join('');
     }
 
     document.getElementById('subSubmit').addEventListener('click', () => {
