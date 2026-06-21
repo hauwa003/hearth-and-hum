@@ -222,7 +222,7 @@
       align-items: center;
       background: var(--cream);
       box-shadow: 0 4px 24px rgba(61, 44, 30, 0.06);
-      transform: translateY(0);
+      transform: translateY(-100%);
       transition: transform 0.5s var(--smooth);
     }
 
@@ -890,6 +890,32 @@
       background: var(--latte);
       padding: 0.25rem 0.6rem;
       border-radius: var(--radius-full);
+    }
+
+    .btn-add-bag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--espresso);
+      background: transparent;
+      color: var(--espresso);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      margin-top: 0.75rem;
+      width: 100%;
+    }
+
+    .btn-add-bag:hover {
+      background: var(--espresso);
+      color: var(--cream);
+    }
+
+    .btn-add-bag.done {
+      background: var(--espresso);
+      color: var(--cream);
     }
 
     /* ===== PRODUCT DETAIL MODAL ===== */
@@ -2113,7 +2139,6 @@
       gap: 1rem;
       padding: 1rem 0;
       border-bottom: 1px solid rgba(196, 167, 125, 0.12);
-      animation: slideIn 0.35s var(--smooth);
       transition: background 200ms ease-out;
     }
 
@@ -2129,14 +2154,14 @@
       height: 48px;
       border-radius: 0;
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 300;
-      color: var(--crema);
+      overflow: hidden;
       background: rgba(196, 167, 125, 0.1);
+    }
+
+    .cart-item-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .cart-item-info { flex: 1; }
@@ -2854,6 +2879,7 @@
               <div class="product-weight">340g</div>
               <div class="product-price">$22</div>
             </div>
+            <button class="btn-add-bag" data-id="morning-hum" data-name="Morning Hum" data-price="22" data-image="images/product-1.png">Add to Bag</button>
           </div>
         </div>
 
@@ -2869,8 +2895,9 @@
             </div>
             <div class="product-meta">
               <div class="product-weight">340g</div>
-              <div class="product-price">$19</div>
+              <div class="product-price">$22</div>
             </div>
+            <button class="btn-add-bag" data-id="the-regular" data-name="The Regular" data-price="22" data-image="images/product-2.png">Add to Bag</button>
           </div>
         </div>
 
@@ -2886,8 +2913,9 @@
             </div>
             <div class="product-meta">
               <div class="product-weight">340g</div>
-              <div class="product-price">$24</div>
+              <div class="product-price">$22</div>
             </div>
+            <button class="btn-add-bag" data-id="nightcap" data-name="Nightcap" data-price="22" data-image="images/product-3.png">Add to Bag</button>
           </div>
         </div>
 
@@ -2903,8 +2931,9 @@
             </div>
             <div class="product-meta">
               <div class="product-weight">340g</div>
-              <div class="product-price">$21</div>
+              <div class="product-price">$22</div>
             </div>
+            <button class="btn-add-bag" data-id="wind-down" data-name="Wind-Down" data-price="22" data-image="images/product-4.png">Add to Bag</button>
           </div>
         </div>
       </div>
@@ -3564,7 +3593,7 @@
       },
       'the-regular': {
         name: 'The Regular',
-        price: '$19.00 USD',
+        price: '$22.00 USD',
         origin: 'Colombia · Washed · 1,700 masl',
         desc: 'Our everyday medium roast — balanced, smooth, and endlessly drinkable. Sourced from Huila, Colombia, with a comforting profile of raspberry sweetness, golden honey, and rich cocoa.',
         notes: 'Raspberry, honey, and cocoa. A well-rounded, smooth body with gentle sweetness and a clean, chocolatey finish.',
@@ -3573,7 +3602,7 @@
       },
       'nightcap': {
         name: 'Nightcap',
-        price: '$24.00 USD',
+        price: '$22.00 USD',
         origin: 'Brazil · Natural · 1,100 masl',
         desc: 'A deep, indulgent dark roast for those quiet evening moments. Naturally processed Brazilian beans bring bold flavours of dark chocolate, ripe fig, and brown sugar warmth.',
         notes: 'Dark chocolate, fig, and brown sugar. Full-bodied and velvety with a lingering, syrupy sweetness.',
@@ -3582,7 +3611,7 @@
       },
       'wind-down': {
         name: 'Wind-Down',
-        price: '$21.00 USD',
+        price: '$22.00 USD',
         origin: 'Colombia · Sugarcane Process',
         desc: 'All the flavour, none of the buzz. Our decaf uses the gentle sugarcane process to preserve every nuance — smooth caramel, toasted almond, and a whisper of cocoa.',
         notes: 'Caramel, almond, and cocoa. Silky smooth with a naturally sweet, mellow character. You won\'t believe it\'s decaf.',
@@ -3657,7 +3686,7 @@
       if (cart[currentPdpId]) {
         cart[currentPdpId].qty += pdpQty;
       } else {
-        cart[currentPdpId] = { id: currentPdpId, name: p.name, price: priceNum, bg: '#FAF6F1', emoji: '', qty: pdpQty };
+        cart[currentPdpId] = { id: currentPdpId, name: p.name, price: priceNum, image: p.images[0], qty: pdpQty };
       }
       updateBadge();
       renderCart();
@@ -3792,7 +3821,7 @@
         const sub = i.price * i.qty;
         total += sub;
         return `<div class="cart-item">
-          <div class="cart-item-thumb">${i.name.charAt(0)}</div>
+          <div class="cart-item-thumb"><img src="${i.image}" alt="${i.name}"></div>
           <div class="cart-item-info">
             <div class="cart-item-name">${i.name}</div>
             <div class="cart-item-weight">340g bag</div>
@@ -3846,9 +3875,9 @@
     document.querySelectorAll('.btn-add-bag').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation();
-        const { id, name, price, bg, emoji } = btn.dataset;
+        const { id, name, price, image } = btn.dataset;
         if (cart[id]) cart[id].qty++;
-        else cart[id] = { id, name, price: +price, bg, emoji, qty: 1 };
+        else cart[id] = { id, name, price: +price, image: image || (pdpData[id] && pdpData[id].images[0]) || '', qty: 1 };
         updateBadge();
         renderCart();
         const orig = btn.innerHTML;
