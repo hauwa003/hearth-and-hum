@@ -4402,7 +4402,7 @@
           <div class="cart-item-thumb"><img src="${i.image}" alt="${i.name}"></div>
           <div class="cart-item-info">
             <div class="cart-item-name">${i.name}</div>
-            <div class="cart-item-weight">340g bag</div>
+            <div class="cart-item-weight">${i.id.startsWith('sub-') ? (i.freq || 'Subscription') : '340g bag'}</div>
             <div class="cart-item-row">
               <div class="qty-control">
                 <button class="qty-btn" onclick="changeQty('${i.id}',-1)">&minus;</button>
@@ -4544,12 +4544,35 @@
     document.getElementById('subSubmit').addEventListener('click', () => {
       const email = document.getElementById('subEmail').value.trim();
       if (email && email.includes('@')) {
+        // Add subscription to cart
+        const product = pdpData[subRoast];
+        const name = product ? product.name : subRoast;
+        const image = product ? product.images[0] : 'images/subscription.webp';
+        const subId = 'sub-' + subRoast + '-' + subGrind.toLowerCase().replace(/\s+/g, '-');
+        cart[subId] = {
+          id: subId,
+          name: name + ' · ' + subGrind,
+          price: 22,
+          image: image,
+          qty: 1,
+          freq: subFreq
+        };
+        updateBadge();
+        renderCart();
+
+        // Show confirmation then close and open cart
         document.getElementById('subSummary').style.display = 'none';
         document.getElementById('subEmail').style.display = 'none';
         document.getElementById('subSubmit').style.display = 'none';
         document.querySelector('#subStep4 .sub-modal-back').style.display = 'none';
         document.querySelector('#subStep4 .sub-modal-label').style.display = 'none';
         document.getElementById('subConfirmMsg').classList.add('show');
+
+        // Auto-close modal and open cart after a brief moment
+        setTimeout(() => {
+          closeSubModal();
+          openCart();
+        }, 1500);
       }
     });
 
