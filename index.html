@@ -2353,10 +2353,23 @@
     }
     .checkout-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
 
+    .checkout-modal-img {
+      width: calc(100% + 4rem);
+      margin: -2.5rem -2rem 1.5rem;
+      height: 140px;
+      overflow: hidden;
+    }
+    .checkout-modal-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
     .checkout-modal-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.7rem;
       font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
       color: var(--espresso);
       text-align: center;
       margin-bottom: 1.5rem;
@@ -2400,8 +2413,8 @@
       margin-top: 0.2rem;
     }
     .checkout-item-price {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
       font-weight: 700;
       color: var(--espresso);
     }
@@ -2420,8 +2433,8 @@
       letter-spacing: 0.1em;
     }
     .checkout-total-price {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--espresso);
     }
@@ -3432,6 +3445,7 @@
   <div class="checkout-overlay" id="checkoutOverlay"></div>
   <div class="checkout-modal" id="checkoutModal">
     <button class="checkout-close" id="checkoutClose">&#10005;</button>
+    <div class="checkout-modal-img"><img src="images/subscription.webp" alt="Hearth & Hum"></div>
     <div class="checkout-modal-title">Checkout</div>
     <div id="checkoutItems"></div>
     <div class="checkout-total">
