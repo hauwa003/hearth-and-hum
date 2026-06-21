@@ -2475,6 +2475,8 @@
       transform: translate(-50%, -50%) scale(0.95);
       width: 90%;
       max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
       background: var(--cream);
       z-index: 3001;
       padding: 2.5rem 2rem;
@@ -2601,6 +2603,48 @@
       color: var(--espresso);
     }
 
+    /* ===== SHARED CHECKOUT FORM STYLES ===== */
+    .checkout-divider {
+      border: none;
+      border-top: 1px solid var(--latte);
+      margin: 1.25rem 0;
+    }
+    .checkout-form-section {
+      margin-bottom: 1rem;
+    }
+    .checkout-form-label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mocha);
+      margin-bottom: 0.75rem;
+    }
+    .checkout-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--latte);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--espresso);
+      margin-bottom: 0.6rem;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .checkout-input:focus { border-color: var(--espresso); }
+    .checkout-input::placeholder { color: var(--mocha); opacity: 0.6; }
+    .checkout-input.error,
+    .sub-modal-input.error { border-color: var(--coral); }
+    .checkout-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .checkout-row .checkout-input,
+    .checkout-row .sub-modal-input { flex: 1; min-width: 0; }
+
     .order-toast {
       position: fixed;
       top: 2rem;
@@ -2641,6 +2685,8 @@
       transform: translate(-50%, -50%) scale(0.95);
       width: 90%;
       max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
       background: var(--cream);
       z-index: 3001;
       padding: 2.5rem 2rem;
@@ -3688,6 +3734,28 @@
       <span class="checkout-total-label">Total</span>
       <span class="checkout-total-price" id="checkoutTotal">$0</span>
     </div>
+    <hr class="checkout-divider">
+
+    <div class="checkout-form-section">
+      <div class="checkout-form-label">Shipping</div>
+      <input type="text" class="checkout-input" id="coShipName" placeholder="Full Name">
+      <input type="text" class="checkout-input" id="coShipAddress" placeholder="Address">
+      <div class="checkout-row">
+        <input type="text" class="checkout-input" id="coShipCity" placeholder="City">
+        <input type="text" class="checkout-input" id="coShipPostcode" placeholder="Postcode">
+      </div>
+      <input type="text" class="checkout-input" id="coShipCountry" placeholder="Country" value="United Kingdom">
+    </div>
+
+    <div class="checkout-form-section">
+      <div class="checkout-form-label">Payment</div>
+      <input type="text" class="checkout-input" id="coCardNumber" placeholder="Card Number" maxlength="19" inputmode="numeric">
+      <div class="checkout-row">
+        <input type="text" class="checkout-input" id="coExpiry" placeholder="MM / YY" maxlength="7" inputmode="numeric">
+        <input type="text" class="checkout-input" id="coCvc" placeholder="CVC" maxlength="4" inputmode="numeric">
+      </div>
+    </div>
+
     <button class="btn-checkout-now" id="checkoutConfirm">Complete Purchase</button>
   </div>
 
@@ -3769,6 +3837,26 @@
         <div class="sub-summary-trust">Free shipping · Cancel anytime</div>
       </div>
       <input type="email" class="sub-modal-input" id="subEmail" placeholder="your@email.com">
+
+      <div class="checkout-form-section" id="subShipSection">
+        <div class="checkout-form-label">Shipping</div>
+        <input type="text" class="checkout-input" id="subShipName" placeholder="Full Name">
+        <input type="text" class="checkout-input" id="subShipAddress" placeholder="Address">
+        <div class="checkout-row">
+          <input type="text" class="checkout-input" id="subShipCity" placeholder="City">
+          <input type="text" class="checkout-input" id="subShipPostcode" placeholder="Postcode">
+        </div>
+      </div>
+
+      <div class="checkout-form-section" id="subPaySection">
+        <div class="checkout-form-label">Payment</div>
+        <input type="text" class="checkout-input" id="subCardNumber" placeholder="Card Number" maxlength="19" inputmode="numeric">
+        <div class="checkout-row">
+          <input type="text" class="checkout-input" id="subExpiry" placeholder="MM / YY" maxlength="7" inputmode="numeric">
+          <input type="text" class="checkout-input" id="subCvc" placeholder="CVC" maxlength="4" inputmode="numeric">
+        </div>
+      </div>
+
       <button class="sub-modal-btn" id="subSubmit">Add Subscription to Bag</button>
       <div class="sub-confirm-msg" id="subConfirmMsg">
         <div class="sub-modal-label" style="margin-bottom: 0.5rem;">You're all set</div>
@@ -4263,6 +4351,16 @@
     const checkoutModal = document.getElementById('checkoutModal');
     const checkoutOverlay = document.getElementById('checkoutOverlay');
 
+    const coFields = ['coShipName', 'coShipAddress', 'coShipCity', 'coShipPostcode', 'coShipCountry', 'coCardNumber', 'coExpiry', 'coCvc'];
+
+    function resetCheckoutForm() {
+      coFields.forEach(id => {
+        const el = document.getElementById(id);
+        el.value = id === 'coShipCountry' ? 'United Kingdom' : '';
+        el.classList.remove('error');
+      });
+    }
+
     function openCheckout(productId, qty) {
       const p = pdpData[productId];
       if (!p) return;
@@ -4279,6 +4377,7 @@
           <div class="checkout-item-price">$${total.toFixed(2)}</div>
         </div>`;
       document.getElementById('checkoutTotal').textContent = '$' + total.toFixed(2);
+      resetCheckoutForm();
 
       checkoutModal.classList.add('open');
       checkoutOverlay.classList.add('open');
@@ -4293,6 +4392,18 @@
     checkoutOverlay.addEventListener('click', closeCheckout);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCheckout(); });
     document.getElementById('checkoutConfirm').addEventListener('click', () => {
+      let firstError = null;
+      coFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.classList.add('error');
+          if (!firstError) firstError = el;
+        } else {
+          el.classList.remove('error');
+        }
+      });
+      if (firstError) { firstError.focus(); return; }
+
       closeCheckout();
       Object.keys(cart).forEach(k => delete cart[k]);
       updateBadge();
@@ -4300,6 +4411,13 @@
       const toast = document.getElementById('orderToast');
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 3000);
+    });
+
+    // Clear error on typing (checkout)
+    coFields.forEach(id => {
+      document.getElementById(id).addEventListener('input', function() {
+        this.classList.remove('error');
+      });
     });
 
     document.querySelector('.pdp-buy-btn').addEventListener('click', () => {
@@ -4445,6 +4563,7 @@
       }).join('');
       document.getElementById('checkoutItems').innerHTML = html;
       document.getElementById('checkoutTotal').textContent = '$' + total.toFixed(2);
+      resetCheckoutForm();
       closeCart();
       setTimeout(() => {
         checkoutModal.classList.add('open');
@@ -4470,14 +4589,23 @@
     const subModal = document.getElementById('subModal');
     const subOverlay = document.getElementById('subOverlay');
     let subRoast = '', subGrind = '', subFreq = '';
+    const subFormFields = ['subShipName', 'subShipAddress', 'subShipCity', 'subShipPostcode', 'subCardNumber', 'subExpiry', 'subCvc'];
 
     function openSubModal() {
       subRoast = ''; subGrind = ''; subFreq = '';
       document.querySelectorAll('#subModal .sub-option').forEach(b => b.classList.remove('selected'));
       document.getElementById('subEmail').value = '';
+      document.getElementById('subEmail').classList.remove('error');
+      subFormFields.forEach(id => {
+        const el = document.getElementById(id);
+        el.value = '';
+        el.classList.remove('error');
+      });
       document.getElementById('subConfirmMsg').classList.remove('show');
       document.getElementById('subSummary').style.display = '';
       document.getElementById('subEmail').style.display = '';
+      document.getElementById('subShipSection').style.display = '';
+      document.getElementById('subPaySection').style.display = '';
       document.getElementById('subSubmit').style.display = '';
       document.querySelector('#subStep4 .sub-modal-back').style.display = '';
       document.querySelector('#subStep4 .sub-modal-label').style.display = '';
@@ -4543,42 +4671,91 @@
     }
 
     document.getElementById('subSubmit').addEventListener('click', () => {
-      const email = document.getElementById('subEmail').value.trim();
-      if (email && email.includes('@')) {
-        // Add subscription to cart
-        const product = pdpData[subRoast];
-        const name = product ? product.name : subRoast;
-        const image = product ? product.images[0] : 'images/subscription.webp';
-        const subId = 'sub-' + subRoast + '-' + subGrind.toLowerCase().replace(/\s+/g, '-');
-        cart[subId] = {
-          id: subId,
-          name: name + ' · ' + subGrind,
-          price: 22,
-          image: image,
-          qty: 1,
-          freq: subFreq
-        };
-        updateBadge();
-        renderCart();
+      const emailEl = document.getElementById('subEmail');
+      const email = emailEl.value.trim();
+      const allSubFields = ['subEmail', ...subFormFields];
+      let firstError = null;
 
-        // Show confirmation then close and open cart
-        document.getElementById('subSummary').style.display = 'none';
-        document.getElementById('subEmail').style.display = 'none';
-        document.getElementById('subSubmit').style.display = 'none';
-        document.querySelector('#subStep4 .sub-modal-back').style.display = 'none';
-        document.querySelector('#subStep4 .sub-modal-label').style.display = 'none';
-        document.getElementById('subConfirmMsg').classList.add('show');
-
-        // Auto-close modal and open cart after a brief moment
-        setTimeout(() => {
-          closeSubModal();
-          openCart();
-        }, 1500);
+      // Validate email
+      if (!email || !email.includes('@')) {
+        emailEl.classList.add('error');
+        if (!firstError) firstError = emailEl;
+      } else {
+        emailEl.classList.remove('error');
       }
+
+      // Validate shipping + payment
+      subFormFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.classList.add('error');
+          if (!firstError) firstError = el;
+        } else {
+          el.classList.remove('error');
+        }
+      });
+
+      if (firstError) { firstError.focus(); return; }
+
+      // Add subscription to cart
+      const product = pdpData[subRoast];
+      const name = product ? product.name : subRoast;
+      const image = product ? product.images[0] : 'images/subscription.webp';
+      const subId = 'sub-' + subRoast + '-' + subGrind.toLowerCase().replace(/\s+/g, '-');
+      cart[subId] = {
+        id: subId,
+        name: name + ' · ' + subGrind,
+        price: 22,
+        image: image,
+        qty: 1,
+        freq: subFreq
+      };
+      updateBadge();
+      renderCart();
+
+      // Show confirmation then close and open cart
+      document.getElementById('subSummary').style.display = 'none';
+      document.getElementById('subEmail').style.display = 'none';
+      document.getElementById('subShipSection').style.display = 'none';
+      document.getElementById('subPaySection').style.display = 'none';
+      document.getElementById('subSubmit').style.display = 'none';
+      document.querySelector('#subStep4 .sub-modal-back').style.display = 'none';
+      document.querySelector('#subStep4 .sub-modal-label').style.display = 'none';
+      document.getElementById('subConfirmMsg').classList.add('show');
+
+      // Auto-close modal and open cart after a brief moment
+      setTimeout(() => {
+        closeSubModal();
+        openCart();
+      }, 1500);
+    });
+
+    // Clear error on typing (subscription)
+    ['subEmail', ...subFormFields].forEach(id => {
+      document.getElementById(id).addEventListener('input', function() {
+        this.classList.remove('error');
+      });
     });
 
     // Done: close modal
     document.getElementById('subDone').addEventListener('click', closeSubModal);
+
+    // Card formatting (both modals)
+    function formatCardNumber(e) {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+      e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+    function formatExpiry(e) {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+      if (v.length >= 3) v = v.slice(0, 2) + ' / ' + v.slice(2);
+      e.target.value = v;
+    }
+    function formatCvc(e) {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+    }
+    ['coCardNumber', 'subCardNumber'].forEach(id => document.getElementById(id).addEventListener('input', formatCardNumber));
+    ['coExpiry', 'subExpiry'].forEach(id => document.getElementById(id).addEventListener('input', formatExpiry));
+    ['coCvc', 'subCvc'].forEach(id => document.getElementById(id).addEventListener('input', formatCvc));
   </script>
 
   <!-- Lenis smooth scroll -->
