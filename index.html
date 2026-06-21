@@ -453,33 +453,15 @@
     }
 
     .hero-stats {
-      position: absolute;
-      bottom: 5.5rem;
-      left: 3.5rem;
-      display: flex;
-      gap: 2rem;
-      opacity: 0;
-      animation: heroFade 0.8s var(--smooth) 1s forwards;
-    }
-
-    .hero-stat {
+      display: block;
       font-family: var(--font-body);
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--crema);
-      opacity: 0.6;
-    }
-
-    .hero-stat strong {
-      display: block;
-      font-size: 1.1rem;
-      font-weight: 400;
-      letter-spacing: 0;
-      color: var(--cream);
-      opacity: 1;
-      margin-bottom: 0.15rem;
+      opacity: 0.5;
+      margin-top: 0.75rem;
     }
 
     .hero-cta {
@@ -925,7 +907,7 @@
     .btn-add-bag {
       position: absolute;
       top: 0.75rem;
-      left: 0.75rem;
+      right: 0.75rem;
       width: 36px;
       height: 36px;
       display: flex;
@@ -1298,6 +1280,20 @@
       flex-direction: column;
       justify-content: center;
       overflow: visible;
+    }
+
+    .howmade-label {
+      position: absolute;
+      top: 2rem;
+      left: 0;
+      font-family: var(--font-body);
+      font-size: 0.55rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--crema);
+      opacity: 0.4;
+      z-index: 3;
     }
 
     .howmade-frame {
@@ -2478,6 +2474,154 @@
 
     .order-toast.show { transform: translateX(-50%) translateY(0); }
 
+    /* ===== SUBSCRIPTION MODAL ===== */
+    .sub-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(44, 24, 16, 0.6);
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--smooth);
+    }
+    .sub-modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .sub-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      width: 90%;
+      max-width: 440px;
+      background: var(--cream);
+      z-index: 3001;
+      padding: 2.5rem 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--smooth), transform 0.3s var(--smooth);
+    }
+    .sub-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+    .sub-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: 1px solid var(--latte);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--espresso);
+    }
+
+    .sub-modal-title {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--espresso);
+      margin-bottom: 1.5rem;
+    }
+
+    .sub-modal-step { display: none; }
+    .sub-modal-step.active { display: block; }
+
+    .sub-modal-label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mocha);
+      margin-bottom: 0.75rem;
+    }
+
+    .sub-option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sub-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--latte);
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--espresso);
+      text-align: left;
+      width: 100%;
+    }
+
+    .sub-option:hover { border-color: var(--espresso); }
+    .sub-option.selected { border-color: var(--espresso); background: var(--latte); }
+
+    .sub-option-detail {
+      font-size: 0.6rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--mocha);
+    }
+
+    .sub-modal-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--latte);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--espresso);
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .sub-modal-input:focus { border-color: var(--espresso); }
+    .sub-modal-input::placeholder { color: var(--mocha); opacity: 0.6; }
+
+    .sub-modal-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--espresso);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: none;
+      cursor: pointer;
+      transition: background 200ms ease-out;
+    }
+    .sub-modal-btn:hover { background: var(--cream); color: var(--espresso); }
+
+    .sub-modal-back {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mocha);
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    .sub-modal-back:hover { color: var(--espresso); }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
       .product-card { flex: 0 0 calc(50% - 0.25rem); }
@@ -2517,16 +2661,7 @@
         right: auto;
         margin-top: 1rem;
       }
-      .hero-stats {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        justify-content: center;
-        margin-top: 1.25rem;
-        gap: 1.5rem;
-      }
-      .hero-stat { font-size: 0.55rem; text-align: center; }
-      .hero-stat strong { font-size: 0.95rem; }
+      .hero-stats { display: block; margin-top: 0.5rem; }
       .hero-logo-svg { width: clamp(150px, 40vw, 220px); }
       .hero-photo { width: clamp(250px, 65vw, 340px); }
       .hero-photos { gap: 0.75rem; padding: 0.5rem 0 2rem; }
@@ -2843,14 +2978,9 @@
         </div>
 
         <!-- Description -->
-        <p class="hero-desc">We roast small batch specialty coffee for the moments that matter — slow mornings, long conversations, and everything in between.</p>
-
-        <!-- Social proof stats -->
-        <div class="hero-stats">
-          <div class="hero-stat"><strong>4.9/5</strong>Avg Rating</div>
-          <div class="hero-stat"><strong>1,200+</strong>Happy Customers</div>
-          <div class="hero-stat"><strong>48hr</strong>Roast to Door</div>
-        </div>
+        <p class="hero-desc">We roast small batch specialty coffee for the moments that matter — slow mornings, long conversations, and everything in between.
+          <span class="hero-stats">4.9 Avg Rating · 1,200+ Customers · 48hr Roast to Door</span>
+        </p>
 
         <!-- CTA -->
         <a href="#products" class="hero-cta">Shop Best Sellers</a>
@@ -3041,6 +3171,7 @@
     <!-- HOW IT'S MADE -->
     <section class="howmade-section" id="howmade">
       <div class="howmade-inner">
+        <div class="howmade-label">How It's Made</div>
         <img src="images/logo.svg" alt="" class="howmade-watermark" style="filter: brightness(10)">
         <div class="howmade-copy" id="howmadeCopy">
           <p class="howmade-copy-text" id="howmadeCopyText"></p>
@@ -3301,6 +3432,52 @@
   </div>
 
   <div class="order-toast" id="orderToast">Order confirmed — thank you!</div>
+
+  <!-- SUBSCRIPTION MODAL -->
+  <div class="sub-modal-overlay" id="subOverlay"></div>
+  <div class="sub-modal" id="subModal">
+    <button class="sub-modal-close" id="subClose">&#10005;</button>
+    <div class="sub-modal-title">Start Your Subscription</div>
+
+    <!-- Step 1: Choose roast -->
+    <div class="sub-modal-step active" id="subStep1">
+      <div class="sub-modal-label">Choose your roast</div>
+      <div class="sub-option-group" id="subRoastGroup">
+        <button class="sub-option" data-roast="Morning Hum">Morning Hum <span class="sub-option-detail">Light Roast</span></button>
+        <button class="sub-option" data-roast="The Regular">The Regular <span class="sub-option-detail">Medium Roast</span></button>
+        <button class="sub-option" data-roast="Nightcap">Nightcap <span class="sub-option-detail">Dark Roast</span></button>
+        <button class="sub-option" data-roast="Wind-Down">Wind-Down <span class="sub-option-detail">Decaf</span></button>
+      </div>
+      <button class="sub-modal-btn" id="subNext1">Continue</button>
+    </div>
+
+    <!-- Step 2: Choose frequency -->
+    <div class="sub-modal-step" id="subStep2">
+      <button class="sub-modal-back" id="subBack2">&larr; Back</button>
+      <div class="sub-modal-label">How often?</div>
+      <div class="sub-option-group" id="subFreqGroup">
+        <button class="sub-option" data-freq="Every week">Every week <span class="sub-option-detail">$22/week</span></button>
+        <button class="sub-option" data-freq="Every 2 weeks">Every 2 weeks <span class="sub-option-detail">$22/2 weeks</span></button>
+        <button class="sub-option" data-freq="Every month">Every month <span class="sub-option-detail">$22/month</span></button>
+      </div>
+      <button class="sub-modal-btn" id="subNext2">Continue</button>
+    </div>
+
+    <!-- Step 3: Email -->
+    <div class="sub-modal-step" id="subStep3">
+      <button class="sub-modal-back" id="subBack3">&larr; Back</button>
+      <div class="sub-modal-label">Where should we send updates?</div>
+      <input type="email" class="sub-modal-input" id="subEmail" placeholder="your@email.com">
+      <button class="sub-modal-btn" id="subSubmit">Subscribe</button>
+    </div>
+
+    <!-- Step 4: Confirmation -->
+    <div class="sub-modal-step" id="subStep4">
+      <div class="sub-modal-label" style="margin-bottom: 0.5rem;">You're all set</div>
+      <p style="font-family: var(--font-body); font-size: 14px; color: var(--mocha); line-height: 1.6; margin-bottom: 1.5rem;">We'll be in touch with your first delivery details. Welcome to the family.</p>
+      <button class="sub-modal-btn" id="subDone">Close</button>
+    </div>
+  </div>
 
   <!-- PRODUCT DETAIL MODAL -->
   <div class="pdp-overlay" id="pdpOverlay"></div>
@@ -3972,6 +4149,61 @@
         openCart();
       });
     });
+
+    // SUBSCRIPTION MODAL
+    const subModal = document.getElementById('subModal');
+    const subOverlay = document.getElementById('subOverlay');
+    let subRoast = '', subFreq = '';
+
+    function openSubModal() {
+      subModal.classList.add('open');
+      subOverlay.classList.add('open');
+      showSubStep(1);
+    }
+    function closeSubModal() {
+      subModal.classList.remove('open');
+      subOverlay.classList.remove('open');
+    }
+    function showSubStep(n) {
+      document.querySelectorAll('.sub-modal-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('subStep' + n).classList.add('active');
+    }
+
+    document.querySelector('.btn-sub').addEventListener('click', openSubModal);
+    document.getElementById('subClose').addEventListener('click', closeSubModal);
+    subOverlay.addEventListener('click', closeSubModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSubModal(); });
+
+    // Step 1: Roast selection
+    document.querySelectorAll('#subRoastGroup .sub-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#subRoastGroup .sub-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        subRoast = btn.dataset.roast;
+      });
+    });
+    document.getElementById('subNext1').addEventListener('click', () => { if (subRoast) showSubStep(2); });
+
+    // Step 2: Frequency selection
+    document.querySelectorAll('#subFreqGroup .sub-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#subFreqGroup .sub-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        subFreq = btn.dataset.freq;
+      });
+    });
+    document.getElementById('subNext2').addEventListener('click', () => { if (subFreq) showSubStep(3); });
+    document.getElementById('subBack2').addEventListener('click', () => showSubStep(1));
+    document.getElementById('subBack3').addEventListener('click', () => showSubStep(2));
+
+    // Step 3: Submit
+    document.getElementById('subSubmit').addEventListener('click', () => {
+      const email = document.getElementById('subEmail').value.trim();
+      if (email && email.includes('@')) showSubStep(4);
+    });
+
+    // Step 4: Done
+    document.getElementById('subDone').addEventListener('click', closeSubModal);
   </script>
 
   <!-- Lenis smooth scroll -->
