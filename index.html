@@ -526,28 +526,6 @@
       line-height: 1.6;
     }
 
-    .hero-cart-btn {
-      margin-top: 0.75rem;
-      padding: 0.45rem 0.9rem;
-      background: var(--cream);
-      color: var(--espresso);
-      border: none;
-      font-family: var(--font-body);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    .hero-cart-btn:hover { background: var(--crema); }
-
-    .hero-cart-badge {
-      font-size: 0.65rem;
-      font-weight: 700;
-    }
-
     /* Brand */
     .hero-brand {
       text-align: center;
@@ -3222,7 +3200,6 @@
           <span>Small Batch Roasted</span>
           <span>Portland, Oregon</span>
           <span>Est. 2024</span>
-          <button class="hero-cart-btn" id="heroCartOpen">My Bag <span class="hero-cart-badge" id="heroCartBadge"></span></button>
         </div>
       </div>
 
@@ -4286,7 +4263,6 @@
     function closeCart() { sidebar.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; }
 
     document.getElementById('cartOpen').addEventListener('click', openCart);
-    document.getElementById('heroCartOpen').addEventListener('click', openCart);
     document.getElementById('cartClose').addEventListener('click', closeCart);
     overlay.addEventListener('click', closeCart);
     document.addEventListener('keydown', e => {
@@ -4314,8 +4290,6 @@
       badge.classList.remove('pop');
       void badge.offsetWidth;
       if (n > 0) badge.classList.add('pop');
-      const heroBadge = document.getElementById('heroCartBadge');
-      if (heroBadge) heroBadge.textContent = n > 0 ? '(' + n + ')' : '';
     }
 
     function renderCart() {
