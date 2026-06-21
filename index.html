@@ -1140,7 +1140,7 @@
     .pdp-buy-btn {
       flex: 1;
       padding: 1rem;
-      border: none;
+      border: 1px solid var(--espresso);
       background: var(--espresso);
       color: var(--cream);
       font-family: var(--font-body);
@@ -1148,7 +1148,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      transition: background 200ms ease-out;
+      transition: background 200ms ease-out, color 200ms ease-out;
     }
 
     .pdp-buy-btn:hover { background: var(--cream); color: var(--espresso); }
@@ -2313,10 +2313,25 @@
     }
     .checkout-item {
       display: flex;
-      justify-content: space-between;
+      gap: 1rem;
       align-items: center;
       padding: 1rem 0;
       border-bottom: 1px solid var(--latte);
+    }
+    .checkout-item-thumb {
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      overflow: hidden;
+      background: var(--latte);
+    }
+    .checkout-item-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .checkout-item-info {
+      flex: 1;
     }
     .checkout-item-name {
       font-family: var(--font-body);
@@ -2585,10 +2600,11 @@
       .sub-text-card { position: relative; left: auto; top: auto; transform: none; width: 100%; margin-top: -2rem; }
       .sub-title { font-size: clamp(1.4rem, 5vw, 1.8rem); }
       .sub-copy { font-size: 13px; }
+      .btn-sub { width: 100%; justify-content: center; }
 
       /* Footer */
       .footer-nav-left { display: none; }
-      .footer-info-right { display: none; }
+      .footer-info-right { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
       .footer-desc {
         position: relative;
         bottom: auto;
@@ -2873,7 +2889,7 @@
             <div>
               <div class="product-name">Morning Hum</div>
               <div class="product-subtitle">Light Roast</div>
-              <div class="product-notes">Peach · Jasmine · Honey</div>
+              <div class="product-notes">Peach · Jasmine · Citrus</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">340g</div>
@@ -2891,7 +2907,7 @@
             <div>
               <div class="product-name">The Regular</div>
               <div class="product-subtitle">Medium Roast</div>
-              <div class="product-notes">Caramel · Walnut · Brown Sugar</div>
+              <div class="product-notes">Raspberry · Brown Sugar · Pink Grapefruit</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">340g</div>
@@ -2909,7 +2925,7 @@
             <div>
               <div class="product-name">Nightcap</div>
               <div class="product-subtitle">Dark Roast</div>
-              <div class="product-notes">Dark Chocolate · Fig · Smoky Oak</div>
+              <div class="product-notes">Raspberry · Dark Chocolate · Floral</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">340g</div>
@@ -2927,7 +2943,7 @@
             <div>
               <div class="product-name">Wind-Down</div>
               <div class="product-subtitle">Decaf</div>
-              <div class="product-notes">Vanilla · Toasted Almond · Chamomile</div>
+              <div class="product-notes">Raspberry · Brown Sugar · Pink Grapefruit</div>
             </div>
             <div class="product-meta">
               <div class="product-weight">340g</div>
@@ -3587,7 +3603,7 @@
         price: '$22.00 USD',
         origin: 'Ethiopia · Washed · 1,900 masl',
         desc: 'A bright and uplifting light roast that tastes like sunshine in a cup. Sourced from the highlands of Ethiopia, each sip brings notes of ripe peach, delicate jasmine, and fresh citrus. Perfect for your morning ritual.',
-        notes: 'Peach, jasmine, and citrus. A clean, bright cup with floral aromatics and a juicy, sweet finish that lingers.',
+        notes: 'Peach, jasmine, and citrus. A clean, bright cup with floral aromatics and a juicy, sweet finish.',
         originDetail: 'Sourced from smallholder farms in the Yirgacheffe region of Ethiopia at 1,900 metres above sea level. Washed process, dried on raised beds. Fair trade certified.',
         images: ['images/product-1.png', 'images/morning-hum-2.png', 'images/morning-hum-3.png']
       },
@@ -3596,7 +3612,7 @@
         price: '$22.00 USD',
         origin: 'Colombia · Washed · 1,700 masl',
         desc: 'Our everyday medium roast — balanced, smooth, and endlessly drinkable. Sourced from Huila, Colombia, with a comforting profile of raspberry sweetness, golden honey, and rich cocoa.',
-        notes: 'Raspberry, honey, and cocoa. A well-rounded, smooth body with gentle sweetness and a clean, chocolatey finish.',
+        notes: 'Raspberry, brown sugar, and pink grapefruit. A well-rounded, smooth body with gentle sweetness and a bright, fruity finish.',
         originDetail: 'Grown by family farmers in Huila, Colombia at 1,700 metres. Washed and sun-dried for clean, consistent flavour. Rainforest Alliance certified.',
         images: ['images/product-2.png', 'images/the-regular-2.png', 'images/the-regular-3.png']
       },
@@ -3605,7 +3621,7 @@
         price: '$22.00 USD',
         origin: 'Brazil · Natural · 1,100 masl',
         desc: 'A deep, indulgent dark roast for those quiet evening moments. Naturally processed Brazilian beans bring bold flavours of dark chocolate, ripe fig, and brown sugar warmth.',
-        notes: 'Dark chocolate, fig, and brown sugar. Full-bodied and velvety with a lingering, syrupy sweetness.',
+        notes: 'Raspberry, dark chocolate, and floral. Full-bodied and velvety with a lingering, layered sweetness.',
         originDetail: 'Natural processed beans from Minas Gerais, Brazil at 1,100 metres. Sun-dried whole cherry for maximum sweetness and body. Direct trade partnership.',
         images: ['images/product-3.png', 'images/wind-down-2.png', 'images/wind-down-3.png']
       },
@@ -3614,7 +3630,7 @@
         price: '$22.00 USD',
         origin: 'Colombia · Sugarcane Process',
         desc: 'All the flavour, none of the buzz. Our decaf uses the gentle sugarcane process to preserve every nuance — smooth caramel, toasted almond, and a whisper of cocoa.',
-        notes: 'Caramel, almond, and cocoa. Silky smooth with a naturally sweet, mellow character. You won\'t believe it\'s decaf.',
+        notes: 'Raspberry, brown sugar, and pink grapefruit. Silky smooth with a naturally sweet, mellow character.',
         originDetail: 'Sugarcane EA decaffeination process preserves delicate flavours while removing 99.9% of caffeine. Sourced from Nariño, Colombia.',
         images: ['images/product-4.png', 'images/wind-down-4.png', 'images/wind-down-5.png']
       }
@@ -3710,7 +3726,8 @@
 
       document.getElementById('checkoutItems').innerHTML = `
         <div class="checkout-item">
-          <div>
+          <div class="checkout-item-thumb"><img src="${p.images[0]}" alt="${p.name}"></div>
+          <div class="checkout-item-info">
             <div class="checkout-item-name">${p.name}</div>
             <div class="checkout-item-detail">Qty: ${qty} · 340g bag</div>
           </div>
@@ -3856,7 +3873,8 @@
         const sub = i.price * i.qty;
         total += sub;
         return `<div class="checkout-item">
-          <div>
+          <div class="checkout-item-thumb"><img src="${i.image}" alt="${i.name}"></div>
+          <div class="checkout-item-info">
             <div class="checkout-item-name">${i.name}</div>
             <div class="checkout-item-detail">Qty: ${i.qty} · 340g bag</div>
           </div>
