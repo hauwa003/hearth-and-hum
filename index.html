@@ -2710,8 +2710,8 @@
 
     .sub-option {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-start;
       padding: 0.85rem 1rem;
       border: 1px solid var(--latte);
       background: transparent;
@@ -2728,6 +2728,19 @@
     .sub-option:hover { border-color: var(--espresso); }
     .sub-option.selected { border-color: var(--espresso); background: var(--latte); }
 
+    .sub-option-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--espresso);
+    }
+
+    .sub-option-notes {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--mocha);
+      margin-top: 0.2rem;
+    }
+
     .sub-option-detail {
       font-size: 0.6rem;
       font-weight: 500;
@@ -2735,6 +2748,49 @@
       letter-spacing: 0.08em;
       color: var(--mocha);
     }
+
+    .sub-summary {
+      background: var(--latte);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .sub-summary-name {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--espresso);
+    }
+
+    .sub-summary-detail {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--mocha);
+      margin-top: 0.25rem;
+    }
+
+    .sub-summary-price {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--espresso);
+      margin-top: 0.5rem;
+    }
+
+    .sub-summary-trust {
+      font-family: var(--font-body);
+      font-size: 11px;
+      color: var(--mocha);
+      margin-top: 0.25rem;
+    }
+
+    .sub-confirm-msg {
+      display: none;
+      margin-top: 1rem;
+    }
+    .sub-confirm-msg.show { display: block; }
 
     .sub-modal-input {
       width: 100%;
@@ -3541,10 +3597,10 @@
         </div>
         <div class="sub-text-card">
           <div class="sub-text-card-inner">
-            <h2 class="sub-title">Never Run Out of Your Morning Magic</h2>
-            <p class="sub-copy">Pick your favourite roast, set your schedule, and we handle the rest. Freshly roasted beans delivered to your door exactly when you need them.</p>
-            <div class="sub-perks">Free Shipping · Cancel Anytime · Roasted to Order</div>
-            <button class="btn-sub">Start Your Subscription</button>
+            <h2 class="sub-title">Build Your Coffee Ritual</h2>
+            <p class="sub-copy">Choose your roast, grind, and delivery rhythm. We'll roast it fresh and send it before your jar runs low.</p>
+            <div class="sub-perks">Roasted to Order · Pause or Cancel Anytime · Ships Every 2, 4, or 6 Weeks</div>
+            <button class="btn-sub">Build My Subscription</button>
           </div>
         </div>
       </div>
@@ -3642,45 +3698,83 @@
   <div class="sub-modal" id="subModal">
     <button class="sub-modal-close" id="subClose">&#10005;</button>
     <div class="sub-modal-img"><img src="images/subscription.webp" alt="Hearth & Hum subscription"></div>
-    <div class="sub-modal-title">Start Your Subscription</div>
+    <div class="sub-modal-title">Build Your Ritual</div>
 
-    <!-- Step 1: Choose roast -->
+    <!-- Step 1: Pick Your Roast -->
     <div class="sub-modal-step active" id="subStep1">
-      <div class="sub-modal-label">Choose your roast</div>
+      <div class="sub-modal-label">Pick Your Roast</div>
       <div class="sub-option-group" id="subRoastGroup">
-        <button class="sub-option" data-roast="Morning Hum">Morning Hum <span class="sub-option-detail">Light Roast</span></button>
-        <button class="sub-option" data-roast="The Regular">The Regular <span class="sub-option-detail">Medium Roast</span></button>
-        <button class="sub-option" data-roast="Nightcap">Nightcap <span class="sub-option-detail">Dark Roast</span></button>
-        <button class="sub-option" data-roast="Wind-Down">Wind-Down <span class="sub-option-detail">Decaf</span></button>
+        <button class="sub-option" data-roast="morning-hum">
+          <span class="sub-option-name">Morning Hum</span>
+          <span class="sub-option-notes">Light Roast · Peach · Jasmine · Citrus</span>
+        </button>
+        <button class="sub-option" data-roast="the-regular">
+          <span class="sub-option-name">The Regular</span>
+          <span class="sub-option-notes">Medium Roast · Raspberry · Brown Sugar · Pink Grapefruit</span>
+        </button>
+        <button class="sub-option" data-roast="nightcap">
+          <span class="sub-option-name">Nightcap</span>
+          <span class="sub-option-notes">Dark Roast · Raspberry · Dark Chocolate · Floral</span>
+        </button>
+        <button class="sub-option" data-roast="wind-down">
+          <span class="sub-option-name">Wind-Down</span>
+          <span class="sub-option-notes">Decaf · Raspberry · Brown Sugar · Pink Grapefruit</span>
+        </button>
       </div>
       <button class="sub-modal-btn" id="subNext1">Continue</button>
     </div>
 
-    <!-- Step 2: Choose frequency -->
+    <!-- Step 2: Choose Your Grind -->
     <div class="sub-modal-step" id="subStep2">
       <button class="sub-modal-back" id="subBack2">&larr; Back</button>
-      <div class="sub-modal-label">How often?</div>
-      <div class="sub-option-group" id="subFreqGroup">
-        <button class="sub-option" data-freq="Every week">Every week <span class="sub-option-detail">$22/week</span></button>
-        <button class="sub-option" data-freq="Every 2 weeks">Every 2 weeks <span class="sub-option-detail">$22/2 weeks</span></button>
-        <button class="sub-option" data-freq="Every month">Every month <span class="sub-option-detail">$22/month</span></button>
+      <div class="sub-modal-label">Choose Your Grind</div>
+      <div class="sub-option-group" id="subGrindGroup">
+        <button class="sub-option" data-grind="Whole Bean">Whole Bean</button>
+        <button class="sub-option" data-grind="Ground for Filter">Ground for Filter</button>
+        <button class="sub-option" data-grind="Ground for French Press">Ground for French Press</button>
+        <button class="sub-option" data-grind="Ground for Espresso">Ground for Espresso</button>
       </div>
       <button class="sub-modal-btn" id="subNext2">Continue</button>
     </div>
 
-    <!-- Step 3: Email -->
+    <!-- Step 3: Choose Delivery Frequency -->
     <div class="sub-modal-step" id="subStep3">
       <button class="sub-modal-back" id="subBack3">&larr; Back</button>
-      <div class="sub-modal-label">Where should we send updates?</div>
-      <input type="email" class="sub-modal-input" id="subEmail" placeholder="your@email.com">
-      <button class="sub-modal-btn" id="subSubmit">Subscribe</button>
+      <div class="sub-modal-label">Choose Delivery Frequency</div>
+      <div class="sub-option-group" id="subFreqGroup">
+        <button class="sub-option" data-freq="Every 2 weeks">
+          <span class="sub-option-name">Every 2 Weeks</span>
+          <span class="sub-option-notes">Best for daily drinkers</span>
+        </button>
+        <button class="sub-option" data-freq="Every 4 weeks">
+          <span class="sub-option-name">Every 4 Weeks</span>
+          <span class="sub-option-notes">Best for a steady home ritual</span>
+        </button>
+        <button class="sub-option" data-freq="Every 6 weeks">
+          <span class="sub-option-name">Every 6 Weeks</span>
+          <span class="sub-option-notes">Best for slow sippers</span>
+        </button>
+      </div>
+      <button class="sub-modal-btn" id="subNext3">Continue</button>
     </div>
 
-    <!-- Step 4: Confirmation -->
+    <!-- Step 4: Order Summary + Email -->
     <div class="sub-modal-step" id="subStep4">
-      <div class="sub-modal-label" style="margin-bottom: 0.5rem;">You're all set</div>
-      <p style="font-family: var(--font-body); font-size: 14px; color: var(--mocha); line-height: 1.6; margin-bottom: 1.5rem;">We'll be in touch with your first delivery details. Welcome to the family.</p>
-      <button class="sub-modal-btn" id="subDone">Close</button>
+      <button class="sub-modal-back" id="subBack4">&larr; Back</button>
+      <div class="sub-modal-label">Order Summary</div>
+      <div class="sub-summary" id="subSummary">
+        <div class="sub-summary-name" id="subSumName"></div>
+        <div class="sub-summary-detail" id="subSumDetail"></div>
+        <div class="sub-summary-price">$22 / delivery</div>
+        <div class="sub-summary-trust">Free shipping · Cancel anytime</div>
+      </div>
+      <input type="email" class="sub-modal-input" id="subEmail" placeholder="your@email.com">
+      <button class="sub-modal-btn" id="subSubmit">Add Subscription to Bag</button>
+      <div class="sub-confirm-msg" id="subConfirmMsg">
+        <div class="sub-modal-label" style="margin-bottom: 0.5rem;">You're all set</div>
+        <p style="font-family: var(--font-body); font-size: 14px; color: var(--mocha); line-height: 1.6; margin-bottom: 1rem;">Your subscription has been added. We'll be in touch with your first delivery details.</p>
+        <button class="sub-modal-btn" id="subDone">Close</button>
+      </div>
     </div>
   </div>
 
@@ -4374,9 +4468,18 @@
     // SUBSCRIPTION MODAL
     const subModal = document.getElementById('subModal');
     const subOverlay = document.getElementById('subOverlay');
-    let subRoast = '', subFreq = '';
+    let subRoast = '', subGrind = '', subFreq = '';
 
     function openSubModal() {
+      subRoast = ''; subGrind = ''; subFreq = '';
+      document.querySelectorAll('#subModal .sub-option').forEach(b => b.classList.remove('selected'));
+      document.getElementById('subEmail').value = '';
+      document.getElementById('subConfirmMsg').classList.remove('show');
+      document.getElementById('subSummary').style.display = '';
+      document.getElementById('subEmail').style.display = '';
+      document.getElementById('subSubmit').style.display = '';
+      document.querySelector('#subStep4 .sub-modal-back').style.display = '';
+      document.querySelector('#subStep4 .sub-modal-label').style.display = '';
       subModal.classList.add('open');
       subOverlay.classList.add('open');
       showSubStep(1);
@@ -4388,6 +4491,7 @@
     function showSubStep(n) {
       document.querySelectorAll('.sub-modal-step').forEach(s => s.classList.remove('active'));
       document.getElementById('subStep' + n).classList.add('active');
+      if (n === 4) buildSubSummary();
     }
 
     document.querySelector('.btn-sub').addEventListener('click', openSubModal);
@@ -4405,7 +4509,18 @@
     });
     document.getElementById('subNext1').addEventListener('click', () => { if (subRoast) showSubStep(2); });
 
-    // Step 2: Frequency selection
+    // Step 2: Grind selection
+    document.querySelectorAll('#subGrindGroup .sub-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#subGrindGroup .sub-option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        subGrind = btn.dataset.grind;
+      });
+    });
+    document.getElementById('subNext2').addEventListener('click', () => { if (subGrind) showSubStep(3); });
+    document.getElementById('subBack2').addEventListener('click', () => showSubStep(1));
+
+    // Step 3: Frequency selection
     document.querySelectorAll('#subFreqGroup .sub-option').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('#subFreqGroup .sub-option').forEach(b => b.classList.remove('selected'));
@@ -4413,17 +4528,32 @@
         subFreq = btn.dataset.freq;
       });
     });
-    document.getElementById('subNext2').addEventListener('click', () => { if (subFreq) showSubStep(3); });
-    document.getElementById('subBack2').addEventListener('click', () => showSubStep(1));
+    document.getElementById('subNext3').addEventListener('click', () => { if (subFreq) showSubStep(4); });
     document.getElementById('subBack3').addEventListener('click', () => showSubStep(2));
 
-    // Step 3: Submit
+    // Step 4: Summary + Submit
+    document.getElementById('subBack4').addEventListener('click', () => showSubStep(3));
+
+    function buildSubSummary() {
+      const product = pdpData[subRoast];
+      const name = product ? product.name : subRoast;
+      document.getElementById('subSumName').textContent = name + ' · ' + subGrind;
+      document.getElementById('subSumDetail').textContent = 'Delivered ' + subFreq.toLowerCase();
+    }
+
     document.getElementById('subSubmit').addEventListener('click', () => {
       const email = document.getElementById('subEmail').value.trim();
-      if (email && email.includes('@')) showSubStep(4);
+      if (email && email.includes('@')) {
+        document.getElementById('subSummary').style.display = 'none';
+        document.getElementById('subEmail').style.display = 'none';
+        document.getElementById('subSubmit').style.display = 'none';
+        document.querySelector('#subStep4 .sub-modal-back').style.display = 'none';
+        document.querySelector('#subStep4 .sub-modal-label').style.display = 'none';
+        document.getElementById('subConfirmMsg').classList.add('show');
+      }
     });
 
-    // Step 4: Done
+    // Done: close modal
     document.getElementById('subDone').addEventListener('click', closeSubModal);
   </script>
 
