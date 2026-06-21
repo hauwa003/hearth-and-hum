@@ -4696,6 +4696,7 @@
       pdpModal.classList.add('open');
       pdpOverlay.classList.add('open');
       pdpModal.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
       if (window.lenis) window.lenis.stop();
     }
 
@@ -4708,6 +4709,7 @@
     function closePDP() {
       pdpModal.classList.remove('open');
       pdpOverlay.classList.remove('open');
+      document.body.style.overflow = '';
       if (window.lenis) window.lenis.start();
     }
 
@@ -4778,11 +4780,13 @@
 
       checkoutModal.classList.add('open');
       checkoutOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
 
     function closeCheckout() {
       checkoutModal.classList.remove('open');
       checkoutOverlay.classList.remove('open');
+      document.body.style.overflow = '';
     }
 
     document.getElementById('checkoutClose').addEventListener('click', closeCheckout);
@@ -4972,6 +4976,7 @@
       setTimeout(() => {
         checkoutModal.classList.add('open');
         checkoutOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
       }, 300);
     });
 
@@ -5015,11 +5020,13 @@
       document.querySelector('#subStep4 .sub-modal-label').style.display = '';
       subModal.classList.add('open');
       subOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
       showSubStep(1);
     }
     function closeSubModal() {
       subModal.classList.remove('open');
       subOverlay.classList.remove('open');
+      document.body.style.overflow = '';
     }
     function showSubStep(n) {
       document.querySelectorAll('.sub-modal-step').forEach(s => s.classList.remove('active'));
