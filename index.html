@@ -4415,7 +4415,8 @@
         </div>`;
       }).join('');
       totalEl.textContent = `$${total}`;
-      shipMsg.textContent = total >= 40 ? 'Complimentary shipping' : `$${40 - total} away from free shipping`;
+      const hasSub = items.some(i => i.id.startsWith('sub-'));
+      shipMsg.textContent = hasSub || total >= 40 ? 'Complimentary shipping' : `$${40 - total} away from free shipping`;
     }
 
     function changeQty(id, d) {
