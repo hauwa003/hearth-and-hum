@@ -4004,7 +4004,7 @@
 
   <!-- CHECKOUT MODAL (Buy it Now) -->
   <div class="checkout-overlay" id="checkoutOverlay"></div>
-  <div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-modal" id="checkoutModal" data-lenis-prevent>
     <div class="sheet-handle"></div>
     <button class="checkout-close" id="checkoutClose">&#10005;</button>
     <div class="checkout-modal-title">Checkout</div>
@@ -4108,7 +4108,7 @@
 
   <!-- SUBSCRIPTION MODAL -->
   <div class="sub-modal-overlay" id="subOverlay"></div>
-  <div class="sub-modal" id="subModal">
+  <div class="sub-modal" id="subModal" data-lenis-prevent>
     <div class="sheet-handle"></div>
     <button class="sub-modal-close" id="subClose">&#10005;</button>
     <div class="sub-modal-title">Build Your Ritual</div>
@@ -4781,12 +4781,14 @@
       checkoutModal.classList.add('open');
       checkoutOverlay.classList.add('open');
       document.body.style.overflow = 'hidden';
+      if (window.lenis) window.lenis.stop();
     }
 
     function closeCheckout() {
       checkoutModal.classList.remove('open');
       checkoutOverlay.classList.remove('open');
       document.body.style.overflow = '';
+      if (window.lenis) window.lenis.start();
     }
 
     document.getElementById('checkoutClose').addEventListener('click', closeCheckout);
@@ -4977,6 +4979,7 @@
         checkoutModal.classList.add('open');
         checkoutOverlay.classList.add('open');
         document.body.style.overflow = 'hidden';
+        if (window.lenis) window.lenis.stop();
       }, 300);
     });
 
@@ -5021,12 +5024,14 @@
       subModal.classList.add('open');
       subOverlay.classList.add('open');
       document.body.style.overflow = 'hidden';
+      if (window.lenis) window.lenis.stop();
       showSubStep(1);
     }
     function closeSubModal() {
       subModal.classList.remove('open');
       subOverlay.classList.remove('open');
       document.body.style.overflow = '';
+      if (window.lenis) window.lenis.start();
     }
     function showSubStep(n) {
       document.querySelectorAll('.sub-modal-step').forEach(s => s.classList.remove('active'));
