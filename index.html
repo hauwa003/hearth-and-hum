@@ -923,28 +923,48 @@
     }
 
     .btn-add-bag {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.6rem 1.2rem;
-      border: 1px solid var(--espresso);
-      background: transparent;
-      color: var(--espresso);
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      border: none;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      margin-top: 0.75rem;
-      width: 100%;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+      z-index: 2;
+    }
+
+    .btn-add-bag svg {
+      width: 16px;
+      height: 16px;
+      color: var(--espresso);
+    }
+
+    .product-card:hover .btn-add-bag {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .btn-add-bag:hover {
       background: var(--espresso);
+    }
+
+    .btn-add-bag:hover svg {
       color: var(--cream);
     }
 
     .btn-add-bag.done {
+      opacity: 1;
       background: var(--espresso);
+    }
+
+    .btn-add-bag.done svg {
       color: var(--cream);
     }
 
@@ -2933,6 +2953,7 @@
         <div class="product-card reveal" data-product="morning-hum">
           <div class="product-img">
             <img src="images/product-1.png" alt="Morning Hum">
+            <button class="btn-add-bag" data-id="morning-hum" data-name="Morning Hum" data-price="22" data-image="images/product-1.png"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
           <div class="product-body">
             <div>
@@ -2944,13 +2965,13 @@
               <div class="product-weight">340g</div>
               <div class="product-price">$22</div>
             </div>
-            <button class="btn-add-bag" data-id="morning-hum" data-name="Morning Hum" data-price="22" data-image="images/product-1.png">Add to Bag</button>
           </div>
         </div>
 
         <div class="product-card reveal" data-product="the-regular">
           <div class="product-img">
             <img src="images/product-2.png" alt="The Regular">
+            <button class="btn-add-bag" data-id="the-regular" data-name="The Regular" data-price="22" data-image="images/product-2.png"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
           <div class="product-body">
             <div>
@@ -2962,13 +2983,13 @@
               <div class="product-weight">340g</div>
               <div class="product-price">$22</div>
             </div>
-            <button class="btn-add-bag" data-id="the-regular" data-name="The Regular" data-price="22" data-image="images/product-2.png">Add to Bag</button>
           </div>
         </div>
 
         <div class="product-card reveal" data-product="nightcap">
           <div class="product-img">
             <img src="images/product-3.png" alt="Nightcap">
+            <button class="btn-add-bag" data-id="nightcap" data-name="Nightcap" data-price="22" data-image="images/product-3.png"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
           <div class="product-body">
             <div>
@@ -2980,13 +3001,13 @@
               <div class="product-weight">340g</div>
               <div class="product-price">$22</div>
             </div>
-            <button class="btn-add-bag" data-id="nightcap" data-name="Nightcap" data-price="22" data-image="images/product-3.png">Add to Bag</button>
           </div>
         </div>
 
         <div class="product-card reveal" data-product="wind-down">
           <div class="product-img">
             <img src="images/product-4.png" alt="Wind-Down">
+            <button class="btn-add-bag" data-id="wind-down" data-name="Wind-Down" data-price="22" data-image="images/product-4.png"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
           <div class="product-body">
             <div>
@@ -2998,7 +3019,6 @@
               <div class="product-weight">340g</div>
               <div class="product-price">$22</div>
             </div>
-            <button class="btn-add-bag" data-id="wind-down" data-name="Wind-Down" data-price="22" data-image="images/product-4.png">Add to Bag</button>
           </div>
         </div>
       </div>
@@ -3352,6 +3372,7 @@
           setTimeout(() => {
             screen.classList.add('hidden');
             document.body.style.overflow = '';
+            setTimeout(() => { screen.style.display = 'none'; }, 1200);
           }, 400);
         } else {
           numberEl.textContent = Math.floor(count);
@@ -3946,10 +3967,8 @@
         else cart[id] = { id, name, price: +price, image: image || (pdpData[id] && pdpData[id].images[0]) || '', qty: 1 };
         updateBadge();
         renderCart();
-        const orig = btn.innerHTML;
         btn.classList.add('done');
-        btn.innerHTML = '&#10003; Added!';
-        setTimeout(() => { btn.classList.remove('done'); btn.innerHTML = orig; }, 1200);
+        setTimeout(() => { btn.classList.remove('done'); }, 1200);
         openCart();
       });
     });
