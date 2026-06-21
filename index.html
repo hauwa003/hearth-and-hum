@@ -1009,20 +1009,20 @@
 
     .pdp-gallery {
       position: relative;
-      min-height: 80vh;
+      min-height: 60vh;
       overflow: hidden;
     }
 
     .pdp-image-main {
       width: 100%;
       height: 100%;
-      min-height: 80vh;
+      min-height: 60vh;
     }
 
     .pdp-image-main img {
       width: 100%;
       height: 100%;
-      min-height: 80vh;
+      min-height: 60vh;
       object-fit: cover;
     }
 
@@ -2689,7 +2689,7 @@
         right: auto;
         margin-top: 1rem;
       }
-      .hero-stats { display: block; margin-top: 0.5rem; }
+      .hero-stats { display: block; margin-top: 0.5rem; font-size: 10px; }
       .hero-logo-svg { width: clamp(150px, 40vw, 220px); }
       .hero-photo { width: clamp(250px, 65vw, 340px); }
       .hero-photos { gap: 0.75rem; padding: 0.5rem 0 2rem; }
@@ -2778,6 +2778,15 @@
       }
       .howmade-copy.active { opacity: 1 !important; }
       .howmade-copy-text { font-size: 13px !important; }
+      .howmade-label {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        font-size: 12px;
+        text-align: center;
+        margin-bottom: 1rem;
+        order: 0;
+      }
       .howmade-watermark { display: none !important; }
       .howmade-mobile-nav {
         order: 3;
@@ -2828,8 +2837,29 @@
       .btn-sub { width: 100%; justify-content: center; }
 
       /* Footer */
-      .footer-nav-left { display: none; }
-      .footer-info-right { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
+      .footer-nav-left {
+        position: relative;
+        top: auto;
+        left: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .footer-info-right {
+        position: relative;
+        top: auto;
+        right: auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem 1.5rem;
+        margin-top: 1.5rem;
+        text-align: center;
+      }
       .footer-desc {
         position: relative;
         bottom: auto;
